@@ -28,10 +28,10 @@ You can't learn to swim without getting wet.
 # Things Worth Watching
 
 ### [Object-Oriented Programming is Bad](https://www.youtube.com/watch?v=QM1iUe6IofM) by [Brian Will](https://github.com/BrianWill)
-I watched this many years ago not long after Brian originally posted it, and am infinitely happy I did so. He also produced a wonderful followup [Object-Oriented Programming is Good*](https://www.youtube.com/watch?v=0iyB0_qPvWk) which proposes a mostly procedural solution with modest amounts of OO (perhaps closes to Go).
+I watched this earlier in my career and am infinitely happy I did so. He also produced the wonderful followup [Object-Oriented Programming is Good*](https://www.youtube.com/watch?v=0iyB0_qPvWk), which proposes a mostly procedural solution with modest amounts of OO (perhaps closest to Go).
 
 ### [The Soul of Erlang and Elixir](https://www.youtube.com/watch?v=JvBT4XBdoUE) by [Sasa Juric](https://github.com/sasa1977)
-Or how BEAM manages to keep rock-solid low latency, and keep long-running requests from blocking resources. (Tangentially related: Go's runtime)
+Or how BEAM manages to keep rock-solid low latency, and keep long-running requests from hogging resources. Worth noting that Go's runtime is not dissimlar.
 
 ### [Joe Armstrong interviews Alan Kay](https://www.youtube.com/watch?v=fhOHn9TClXY)
 Kay recounts the history of OOP and what Simula and Smalltalk-80 were going for. Cogent lessons for those willing to listen, and read between the lines:
