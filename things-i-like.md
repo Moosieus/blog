@@ -19,6 +19,9 @@ Or how the original pervasive OOP langs (Objective-C, C++, Python, and Java) mis
 ### [CALL-RETURN-Spaghetti](https://guitarvydas.github.io/2020/12/09/CALL-RETURN-Spaghetti.html) by [Paul Tarvydas](https://github.com/guitarvydas)
 Makes a case for concurrent systems being inherently simpler than systems based on sequential Call/Return.
 
+### [I ❤️ Logs](https://www.confluent.io/ebook/i-heart-logs-event-data-stream-processing-and-data-integration/) by [Jay Kreps](https://www.linkedin.com/in/jaykreps/)
+A concise and wonderful book about logs, and how they lend themselves to solving problems in distributed systems and stream processing. 
+
 <!-- Programming Philosophy -->
 
 ### [Less is exponentially more](https://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html) by [Rob Pyke](https://en.wikipedia.org/wiki/Rob_Pike)
