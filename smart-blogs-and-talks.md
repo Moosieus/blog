@@ -16,6 +16,9 @@ Or how the original pervasive OOP langs (Objective-C, C++, Python, and Java) mis
 ### [Why concurrency isn't understood](https://elixirforum.com/t/learning-elixir-frst-impressions-plz-dont-kill-me/16424/52) from [Joe Armstrong](https://en.wikipedia.org/wiki/Joe_Armstrong_(programmer))
 > I think a big problem in evangelising Erlang/Elixir is that you have to explain how having large numbers of parallel processes solving you problem helps. Since no other common languages support concurrency in any meaningful way the need for it is not understood.
 
+### [Erlang's not about lightweight processes and message passing...](https://github.com/stevana/armstrong-distributed-systems/blob/main/docs/erlang-is-not-about.md)
+A significant value of Elixir and Erlang's process model are the emergent patterns and architectures that arise from it. This article covers them well.
+
 ### [CALL-RETURN-Spaghetti](https://guitarvydas.github.io/2020/12/09/CALL-RETURN-Spaghetti.html) by [Paul Tarvydas](https://github.com/guitarvydas)
 Makes a case for concurrent systems being inherently simpler than systems based on sequential Call/Return.
 
