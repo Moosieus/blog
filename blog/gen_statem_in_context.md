@@ -1,5 +1,7 @@
-# `:gen_statem` in context
-
+---
+title: "`:gen_statem` in context"
+description: "My personal notes and opinions on :gen_statem in Elixir."
+---
 ## A Priori
 
 ### *Official Erlang Docs:*

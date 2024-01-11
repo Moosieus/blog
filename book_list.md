@@ -1,5 +1,7 @@
-# Book List
-
+---
+title: "Book List"
+description: "Books I've read and enjoyed"
+---
 ## Books I've read and enjoyed
 
 ### The Unix Programming Environment

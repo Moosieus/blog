@@ -1,5 +1,7 @@
-# Timezones
-
+---
+title: "Timezones"
+description: "A brief rant about how timezones are specified."
+---
 I live in the eastern United States.
 
 It's **Eastern Daylight Time (EDT)** from the *2nd Sunday in March* to the *1st Sunday in November*.
