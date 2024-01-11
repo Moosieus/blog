@@ -1,5 +1,7 @@
-# Techincal Guides
-
+---
+title: Techincal Guides
+description: Important things to remember.
+---
 ### [Organizing multiple git identities](https://garrit.xyz/posts/2023-10-13-organizing-multiple-git-identities) by [Garrit Franke](https://garrit.xyz/)
 Bless 🙏
 

@@ -1,6 +1,6 @@
 ---
-title: "Timezones"
-description: "A brief rant about how timezones are specified."
+title: Timezones
+description: A brief rant about how timezones are specified.
 ---
 I live in the eastern United States.
 

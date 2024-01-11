@@ -6,11 +6,18 @@
   <%= header_tags %>
 </head>
 <body>
-  <section class="content">
-    <%= content %>
-  </section>
+  <%= if content do %>
+    <section class="content">
+      <%= content %>
+    </section>
+  <% end %>
+  <%= if index do %>
+    <section class="index">
+      <%= index %>
+    </section>
+  <% end %>
   <footer>
-    <%=  %>
+    <%= footer_content %>
   </footer>
 </body>
 </html>

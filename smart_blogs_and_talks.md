@@ -1,6 +1,7 @@
-# Smart Blogs and Talks
-Organized roughly by category.
-
+---
+title: Smart Blogs and Talks
+description: A list of posts and talks about programming that I like, organized roughly by category.
+---
 ## Articles, Papers, Blogs, and Forum posts
 
 ### Lower Level Stuff

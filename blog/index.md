@@ -1,4 +1,4 @@
-# Blog Index
+# Blog
 Consume at your own peril.
 
 ### [`:gen_statem` in context](./gen_statem_in_context.md)

@@ -1,6 +1,6 @@
 ---
-title: "Read Books"
-description: "ReadBooksReadBooksReadBooksReadBooksReadBooks."
+title: Read Books
+description: ReadBooksReadBooksReadBooksReadBooksReadBooks.
 ---
 You can acquire new skills and gain competency with technologies magnitudes faster compared to solely fumbling around with trial and error.
 
