@@ -58,9 +58,9 @@ That withstanding, `:gen_statem` really shines in use-cases such as managing per
 ## Tutorials
 I consider Andrea Leopardi's [Persistent connections with gen_statem](https://andrealeopardi.com/posts/connection-managers-with-gen-statem/) the best tutorial as persistent connections are an ideal case for `:gen_statem`.
 
-Andrew Bennett's [Time-Out: Elixir State Machines versus Servers](https://potatosalad.io/2017/10/13/time-out-elixir-state-machines-versus-servers) does an summarizing `:gen_statem`'s timeout mechanisms where the official docs struggle to be concise.
+Andrew Bennett's [Time-Out: Elixir State Machines versus Servers](https://potatosalad.io/2017/10/13/time-out-elixir-state-machines-versus-servers) summarizes `:gen_statem`'s timeout mechanisms well where the official docs are less concise.
 
-The [official design principles](https://www.erlang.org/doc/design_principles/statem) are otherwise comprehensive as are the [module docs](https://www.erlang.org/doc/man/gen_statem).
+The [official OTP design principles](https://www.erlang.org/doc/design_principles/statem) are otherwise comprehensive as are the [module docs](https://www.erlang.org/doc/man/gen_statem).
 
 ## Pitfalls
 
@@ -69,10 +69,13 @@ The `:gen_statem` docs are very comprehensive but don't have a gentle learning c
 
 ### Several callback modes
 `:gen_statem` has two possible callback modes, `:state_functions` and `:handle_event_function`, along with the `:state_enter` modifier:
-- `def callback_mode(), do: :state_functions`
-- `def callback_mode(), do: [:state_functions, :state_enter]`
-- `def callback_mode(), do: :handle_event_function`
-- `def callback_mode(), do: [:handle_event_function, :state_enter]`
+
+```elixir
+def callback_mode(), do: :state_functions
+def callback_mode(), do: [:state_functions, :state_enter]
+def callback_mode(), do: :handle_event_function
+def callback_mode(), do: [:handle_event_function, :state_enter]
+```
 
 Pretty much every tutorial uses a different permutation making hard to follow examples. I consider `:state_functions` preferable for its declarative syntax and explicitness compared to `:handle_event_function`, which groups everything under one callback.
 
