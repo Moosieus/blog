@@ -1,4 +1,5 @@
 # `:gen_statem` in context
+In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.
 
 ## Other resources and articles
 
