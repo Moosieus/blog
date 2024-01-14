@@ -2,7 +2,7 @@
 title: ":gen_statem in context"
 description: "My personal notes and opinions on :gen_statem in Elixir."
 ---
-## A Priori
+## Other Resources and Articles
 
 ### *Official Erlang Docs:*
 - [gen_statem design principles](https://www.erlang.org/doc/design_principles/statem)
