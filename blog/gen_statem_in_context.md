@@ -1,12 +1,12 @@
 # `:gen_statem` in context
 
-## Other Resources and Articles
+## Other resources and articles
 
-### *Official Erlang Docs:*
+### *Official Erlang docs:*
 - [gen_statem design principles](https://www.erlang.org/doc/design_principles/statem)
 - [gen_statem module documentation](https://www.erlang.org/doc/man/gen_statem)
 
-### *Existing Articles:*
+### *Existing articles:*
 - [State Machine in Elixir using Erlang’s gen_statem Behaviour](https://meraj-gearhead.ca/state-machine-in-elixir-using-erlangs-genstatem-behaviour) by Meraj Molla
 - [State Timeouts with gen_statem](https://dockyard.com/blog/2020/01/31/state-timeouts-with-gen_statem) by Scott Hamilton
 - [Persistent connections with gen_statem](https://andrealeopardi.com/posts/connection-managers-with-gen-statem/) by Andrea Leopardi (best tutorial)
