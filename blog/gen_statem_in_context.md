@@ -29,7 +29,7 @@ Elixir has processes. Each has its own isolated memory, and they communicate (or
 - How those messages transition our `GenServer` from one state to the next
 
 We gain the following amenities:
-- Postpone handling messages until your `GenServer` is in a state to handle them.
+- Postponing the handling messages until our `GenServer` is in a state to handle them.
 - Comprehensive and easy to use timeouts
 - State enter calls which always perform some task when its state is entered
 - Colocated callback functions for each state
@@ -51,9 +51,9 @@ The typical examples used to illustrate state machines (say a door that may be `
 }
 ```
 
-**In most cases, you should stick to modeling your domain logic as vanilla modules of [plain old data](https://en.wikipedia.org/wiki/Passive_data_structure) structures with pure functions and pattern matching.** Those modules should then be consumed by `GenServer`'s which are simpler and more flexible than `:gen_statem`'s. 
+**In most cases, you should stick to modeling your domain logic as vanilla modules of [plain old data structures](https://en.wikipedia.org/wiki/Passive_data_structure) with pure functions and pattern matching.** Those modules should then be consumed by `GenServer`'s which are simpler and more flexible than `:gen_statem`'s. 
 
-That withstanding, `:gen_statem` really shines in use-cases such as managing persistent connections, webserver sessions, and assembling packets. These use-cases all have a limited amount of states and all involve dealing with [data in motion](https://en.wikipedia.org/wiki/Data_in_transit).
+That withstanding, `:gen_statem` really shines in use-cases such as managing persistent connections, webserver sessions, and assembling packets. These use-cases all have a limited amount of states and deal with [data in motion](https://en.wikipedia.org/wiki/Data_in_transit).
 
 ## Tutorials
 I consider Andrea Leopardi's [Persistent connections with gen_statem](https://andrealeopardi.com/posts/connection-managers-with-gen-statem/) the best tutorial as persistent connections are an ideal case for `:gen_statem`.
