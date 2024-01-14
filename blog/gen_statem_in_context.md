@@ -38,7 +38,7 @@ We gain the following amenities:
 ## When's it appropriate to use?
 The official [`:gen_statem` behaviour docs](https://www.erlang.org/doc/design_principles/statem#when-to-use-gen_statem) provide guidance here, but I'd like to provide more concrete examples.
 
-`:gen_statem` is ideal for organizing the possible states **your `GenServer` process can be in**, but not the possible states your **data can be in**.
+`:gen_statem` is ideal for organizing the possible states **your `GenServer` process can be in**, but not the possible states your **application's data can be in**.
 
 The typical examples used to illustrate state machines (say a door that may be `:open` or `:closed`) aren't appropriate for `:gen_statem`. It'd be highly unusual to model a door as a process when a map would suffice:
 ```elixir
