@@ -33,10 +33,13 @@
       <a href="/" class="link">
         <img class="pixel-art" src="/assets/matcha-big.gif" alt="Matcha" style="height: 5rem;">
       </a>
-      <h1><a href="/">Moosieus' Things n' Stuff</a></h1>
-      <div style="flex-grow: 1;"></div>
-      <a class="link" href="https://github.com/Moosieus" target="_blank">github</a>
-      <a class="link" href="https://www.linkedin.com/in/cameron-duley/" target="_blank">linkedin</a>
+      <div>
+        <h1><a href="/">Moosieus' Things n' Stuff</a></h1>
+        <div style="display: flex; gap: 0.5rem;">
+          <a class="link" href="https://github.com/Moosieus" target="_blank">github</a>
+          <a class="link" href="https://www.linkedin.com/in/cameron-duley/" target="_blank">linkedin</a>
+        </div>
+      </div>
     </nav>
   </header>
   <main class="container content">

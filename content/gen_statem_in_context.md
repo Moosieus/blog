@@ -14,8 +14,8 @@ In this post, I hope to capture some of the institutional knowledge around `:gen
 ### Existing articles
 - [State Machine in Elixir using Erlang’s gen_statem Behaviour](https://meraj-gearhead.ca/state-machine-in-elixir-using-erlangs-genstatem-behaviour) by Meraj Molla
 - [State Timeouts with gen_statem](https://dockyard.com/blog/2020/01/31/state-timeouts-with-gen_statem) by Scott Hamilton
-- [Persistent connections with gen_statem](https://andrealeopardi.com/posts/connection-managers-with-gen-statem/) by Andrea Leopardi (best tutorial)
-- [Time-Out: Elixir State Machines versus Servers](https://potatosalad.io/2017/10/13/time-out-elixir-state-machines-versus-servers) by Andrew Bennett (best explanation of timeouts)
+- [Persistent connections with gen_statem](https://andrealeopardi.com/posts/connection-managers-with-gen-statem/) by Andrea Leopardi
+- [Time-Out: Elixir State Machines versus Servers](https://potatosalad.io/2017/10/13/time-out-elixir-state-machines-versus-servers) by Andrew Bennett
 - [Implementing finite state machines with Erlang and gen_statem](https://www.davekuhlman.org/gen_statem-fsm-rules-implementation.html) by Dave Kuhlman
 
 ### Talks

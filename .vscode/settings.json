@@ -3,9 +3,5 @@
     "editor.tabSize": 2,
     "liveServer.settings.multiRootWorkspaceName": "blog",
     "liveServer.settings.root": "/static",
-    "explorer.sortOrder": "type",
-    "emmet.includeLanguages": {
-        "phoenix-heex": "html",
-        "eex": "html"
-    }
+    "explorer.sortOrder": "type"
 }

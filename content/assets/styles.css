@@ -58,10 +58,6 @@ header nav h1 a {
   text-decoration: none;
 }
 
-header nav a.link {
-  margin-top: -0.15rem;
-}
-
 body {
   display: flex;
   min-height: 100vh;
