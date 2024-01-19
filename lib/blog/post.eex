@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @title %></title>
+  <%= if @description do %><meta name="description" content="<%= @description %>"><% end %>
+  <link rel="stylesheet" href="/assets/modern-normalize.min.css">
+  <link rel="stylesheet" href="/assets/highlight.css">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" type="image/x-icon" href="/assets/matcha-head.gif">
+  <script>
+
+    const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+
+    document.addEventListener("DOMContentLoaded", function(_) {
+      document.getElementById("created_at").textContent =
+        new Date("<%= @created_at %>").toLocaleString(undefined, options)
+      document.getElementById("modified_at").textContent =
+        new Date("<%= @modified_at %>").toLocaleString(undefined, options)
+    })
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="link">
+        <img class="pixel-art" src="/assets/matcha-big.gif" alt="Matcha" style="height: 5rem;">
+      </a>
+      <h1><a href="/">Moosieus' Things n' Stuff</a></h1>
+      <div style="flex-grow: 1;"></div>
+      <a class="link" href="https://github.com/Moosieus" target="_blank">github</a>
+      <a class="link" href="https://www.linkedin.com/in/cameron-duley/" target="_blank">linkedin</a>
+    </nav>
+  </header>
+  <main class="container content">
+    <div style="text-align: center;display: block;margin-bottom: 1rem;">
+      <div style="display: inline-block;padding: 1rem;">
+        <h1 style="margin-bottom: 0.25rem;"><%= @title %></h1>
+        <div>Posted: <span id="created_at"><%= @created_at %></span></div>
+        <%= if @modified_at do %>
+          <div>Updated: <span id="modified_at"><%= @modified_at %></span></div>
+        <% end %>
+        <hr style="margin-top: 1rem;">
+      </div>
+    </div>
+    <div><%= @body %></div>
+  </main>
+  <footer>
+    <span>© Moosieus <%= if @modified_at do DateTime.to_date(@modified_at).year else DateTime.to_date(@created_at).year end %></span>
+  </footer>
+</body>
+</html>

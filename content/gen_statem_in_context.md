@@ -1,7 +1,11 @@
-# `:gen_statem` in context
+%{
+  title: "gen_statem in context",
+  description: "My personal notes and opinions on :gen_statem in Elixir."
+}
+---
 In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.
 
-## Other resources and articles
+## Resources and articles
 
 ### Official Erlang docs
 - [gen_statem design principles](https://www.erlang.org/doc/design_principles/statem)
@@ -15,7 +19,7 @@ In this post, I hope to capture some of the institutional knowledge around `:gen
 - [Implementing finite state machines with Erlang and gen_statem](https://www.davekuhlman.org/gen_statem-fsm-rules-implementation.html) by Dave Kuhlman
 
 ### Talks
-https://www.youtube.com/results?search_query=gen_statem
+- [youtube.com/results?search_query=gen_statem](https://www.youtube.com/results?search_query=gen_statem)
 
 ## Foundations of `:gen_statem`
 Elixir has processes. Each has its own isolated memory, and they communicate (or rather coordinate) by message passing.
@@ -37,7 +41,7 @@ We gain the following amenities:
 - Easy to use internal messaging and handling
 
 ## When's it appropriate to use?
-The official [`:gen_statem` behaviour docs](https://www.erlang.org/doc/design_principles/statem#when-to-use-gen_statem) provide guidance here, but I'd like to provide more concrete examples.
+The official [:gen_statem behaviour docs](https://www.erlang.org/doc/design_principles/statem#when-to-use-gen_statem) provide guidance here, but I'd like to provide more concrete examples.
 
 `:gen_statem` is ideal for organizing the possible states **your `GenServer` process can be in**, but not the possible states your **application's data can be in**.
 
@@ -46,8 +50,8 @@ The typical examples used to illustrate state machines (say a door that may be `
 %{
   id: 1337,
   name: "Front Door",
-  position: :closed # or :open
-  handle: :locked # or :unlocked
+  position: :closed, # or :open
+  handle: :locked, # or :unlocked
   deadbolt: :locked, # or :unlocked
 }
 ```
@@ -96,18 +100,18 @@ By default Elixir won't log termination reports for modules using `:gen_statem`,
 Logger.add_translator({StateMachineTranslator, :translate})
 ```
 
-A similar effect can be had by [setting `:handle_sasl_reports` to true](https://hexdocs.pm/logger/1.16.0/Logger.html#module-boot-configuration), but this logs lots of extra unecessary information that obfuscates your logs.
+A similar effect can be had by [setting :handle_sasl_reports to true](https://hexdocs.pm/logger/1.16.0/Logger.html#module-boot-configuration), but this logs lots of extra unecessary information that obfuscates your logs.
 
 ## How often is `:gen_statem` used?
 The following are searches for invocations of `:gen_statem` and `GenServer` (at time of writing) across Elixir and Erlang repos on github (excluding forks and archives):
-- [`GenServer` usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22use+GenServer%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): ~21,000
-- [`:gen_statem` usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22%40behaviour+%3Agen_statem%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 121
-- [`gen_server` usage in Erlang](https://github.com/search?q=language%3AErlang%20%20content%3A%22-behaviour(gen_server)%22%20NOT%20is%3Afork%20NOT%20is%3Aarchived&type=code): ~16,000
-- [`gen_statem` usage in Erlang](https://github.com/search?q=language%3AErlang++content%3A%22-behaviour%28gen_statem%29.%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 624
+- [GenServer usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22use+GenServer%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): ~21,000
+- [:gen_statem usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22%40behaviour+%3Agen_statem%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 121
+- [gen_server usage in Erlang](https://github.com/search?q=language%3AErlang%20%20content%3A%22-behaviour(gen_server)%22%20NOT%20is%3Afork%20NOT%20is%3Aarchived&type=code): ~16,000
+- [gen_statem usage in Erlang](https://github.com/search?q=language%3AErlang++content%3A%22-behaviour%28gen_statem%29.%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 624
 
 For completeness one might also consider `:gen_statem`'s predecessor `:gen_fsm`:
-- [`:gen_fsm` usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22%40behaviour+%3Agen_fsm%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 46
-- [`gen_fsm` usage in Erlang](https://github.com/search?q=language%3AErlang++content%3A%22-behaviour%28gen_fsm%29.%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 896
+- [:gen_fsm usage in Elixir](https://github.com/search?q=language%3AElixir++content%3A%22%40behaviour+%3Agen_fsm%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 46
+- [gen_fsm usage in Erlang](https://github.com/search?q=language%3AErlang++content%3A%22-behaviour%28gen_fsm%29.%22+NOT+is%3Afork+NOT+is%3Aarchived&type=code): 896
 
 Calculating the ratios, we net some interesting results:
 - ~173:1 `GenServer`'s to `:gen_statem`'s for Elixir.
