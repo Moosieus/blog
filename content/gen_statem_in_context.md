@@ -72,9 +72,9 @@ Pretty much every tutorial uses a different permutation making hard to follow ex
 
 ### Implicit syntax
 Initially it can be difficult to follow `:gen_statem`'s syntax, specifically:
-- The state-callback naming conventions.
-- The returns, e.g `:next_state`, `:keep_state`, :`keep_state_and_data`, `:repeat_state`, and so on.
-- The variety of possible [transition actions](https://www.erlang.org/doc/man/gen_statem#type-action).
+- The state-callback naming conventions
+- The returns e.g. `:next_state`, `:keep_state`, `:keep_state_and_data`, `:repeat_state`
+- The variety of possible [transition actions](https://www.erlang.org/doc/man/gen_statem#type-action)
 
 The docs outline all of these, but it requires lots of jumping back and forth and a careful eye to translate.
 
