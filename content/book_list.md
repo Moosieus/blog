@@ -1,6 +1,7 @@
 %{
   title: "Book List",
-  description: "Books I've read and enjoyed"
+  description: "Books I've read and enjoyed",
+  order_priority: 1
 }
 ---
 ## Books I've read and enjoyed

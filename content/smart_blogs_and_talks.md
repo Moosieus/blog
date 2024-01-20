@@ -1,6 +1,7 @@
 %{
   title: "Smart Blogs and Talks",
-  description: "A list of posts and talks about programming that I like, organized roughly by category."
+  description: "A list of posts and talks about programming that I like, organized roughly by category.",
+  order_priority: 2
 }
 ---
 ## Blogs, Papers, and Forum posts
@@ -36,7 +37,7 @@ A concise and wonderful book about logs, and how they lend themselves to solving
 This paper contains tons of sagely advice for not only building distributed systems but reliable and maintainable software generally, with clear and concise examples. I think they've only grown more relevant as modern systems have trended towards distribution. *This should be mandatory reading for novice Elixir and Erlang devs!*
 
 #### [Less is exponentially more](https://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html) by [Rob Pyke](https://en.wikipedia.org/wiki/Rob_Pike)
-Title is self explanatory. I particularly love this bit:
+<div>Title is self explanatory. I particularly love this bit:</div>
 > But more important, what it says is that types are the way to lift that burden. Types. Not polymorphic functions or language primitives or helpers of other kinds, but types.
 
 #### [Forth: The programming language that writes itself](https://ratfactor.com/forth/the_programming_language_that_writes_itself.html) by [Dave Gauer](http://ratfactor.com/)

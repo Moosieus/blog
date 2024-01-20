@@ -1,6 +1,7 @@
 %{
   title: "gen_statem in context",
-  description: "My personal notes and opinions on :gen_statem in Elixir."
+  description: "My personal notes and opinions on :gen_statem in Elixir.",
+  order_priority: 3
 }
 ---
 In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.

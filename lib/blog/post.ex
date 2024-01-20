@@ -1,4 +1,5 @@
 defmodule Blog.Post do
+  alias Blog.Post
   require Logger
 
   @enforce_keys [
@@ -18,6 +19,7 @@ defmodule Blog.Post do
     :description,
     :created_at,
     :modified_at,
+    :order_priority,
     :filename
   ]
 
@@ -28,6 +30,7 @@ defmodule Blog.Post do
           body: String.t(),
           created_at: DateTime.t(),
           modified_at: DateTime.t(),
+          order_priority: integer(),
           filename: String.t()
         }
 
@@ -43,9 +46,23 @@ defmodule Blog.Post do
         created_at: created_at,
         modified_at: modified_at,
         body: body,
-        filename: Path.basename(filename, ".md")
+        filename: Path.basename(filename, ".md"),
+        order_priority: 999
       ] ++ Map.to_list(attrs)
     )
+  end
+
+  def compare(a = %Post{}, b = %Post{}) do
+    case DateTime.compare(a.created_at, b.created_at) do
+      :gt -> :gt
+      :lt -> :lt
+      :eq ->
+        cond do
+          a.order_priority < b.order_priority -> :lt
+          a.order_priority > b.order_priority -> :gt
+          true -> :eq
+        end
+    end
   end
 
   @spec authors_and_contributors(binary()) :: {binary(), [binary()]}

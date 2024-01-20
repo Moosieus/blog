@@ -19,11 +19,11 @@
   <%= for post <- @posts do %>
     <section>
       <h2 style="border-bottom: none;"><a href={"/#{post.filename}.html"}><%= post.title %></a></h2>
-      <div style="color: var(--text-muted);">
-        Posted: <span class="date"><%= post.created_at %></span>
-      </div>
-      <div style="color: var(--text-muted);padding-bottom:1rem;">
+      <div class="text-muted">
         Updated: <span class="date"><%= post.modified_at %></span>
+      </div>
+      <div class="text-muted" style="padding-bottom:0.5rem;">
+        Posted: <span class="date"><%= post.created_at %></span>
       </div>
       <%= if post.description do %>
         <p><%= post.description %></p>
