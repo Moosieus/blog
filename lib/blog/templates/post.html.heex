@@ -18,9 +18,10 @@
 <section class="content">
   <div style="text-align: center;display: block;margin-bottom: 1rem;">
     <div style="display: inline-block;padding: 1rem;">
-      <h1 style="margin-bottom: 0.25rem;"><%= @post.title %></h1>
+      <h1 style="margin: 0.5rem 0;"><%= @post.title %></h1>
       <div>Posted: <span id="created_at"><%= @post.created_at %></span></div>
       <div>Updated: <span id="modified_at"><%= @post.modified_at %></span></div>
+      <div><a href={"https://github.com/Moosieus/blog/commits/main/content/#{@post.filename}.md"} target="_blank">Changelog</a></div>
       <hr style="margin-top: 1rem;">
     </div>
   </div>

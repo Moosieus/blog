@@ -5,9 +5,9 @@
 ---
 I live in the eastern United States.
 
-It's **Eastern Daylight Time (EDT)** from the *2nd Sunday in March* to the *1st Sunday in November*.
+It's **Eastern Daylight Time (EDT)** from the *second Sunday in March* to the *first Sunday in November*.
 
-It's **Eastern Standard Time (EST)** from the *1st Sunday in November* to the *2nd Sunday in March*.
+It's **Eastern Standard Time (EST)** from the *first Sunday in November* to the *second Sunday in March*.
 
 Collectively they are **America\New_York**.
 

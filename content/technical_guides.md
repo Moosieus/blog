@@ -6,7 +6,7 @@
 ### [Organizing multiple git identities](https://garrit.xyz/posts/2023-10-13-organizing-multiple-git-identities) by [Garrit Franke](https://garrit.xyz/)
 Bless 🙏
 
-### [Elixir's `with` statement and Railway Oriented Programming](https://cbailey.co.uk/posts/elixirs_with_statement_and_railway_oriented_programming)
+### [Elixir's with statement and Railway Oriented Programming](https://cbailey.co.uk/posts/elixirs_with_statement_and_railway_oriented_programming)
 A great guide for handling errors using Elixir's `with` statement and intentional functions.
 
 ### [Kubernetes and the Erlang VM](https://dashbit.co/blog/kubernetes-and-the-erlang-vm-orchestration-on-the-large-and-the-small) by [José Valim](https://github.com/josevalim)

@@ -4,6 +4,9 @@
 }
 ---
 ![Code Quality Continuum](./assets/code_quality_continuum.png)
+<p>
+  <a href="./assets/code_quality_continuum.png" target="_blank">(Click here for the fullscreen image)</a>
+</p>
 
 Some people view spending time on solving a problems 'the right way' anathema to fast delivery. This is my rough attempt to workshop why.
 
