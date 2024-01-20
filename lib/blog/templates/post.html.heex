@@ -1,0 +1,29 @@
+<script>
+  const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+  }
+
+  document.addEventListener("DOMContentLoaded", function(_) {
+    document.getElementById("created_at").textContent =
+      new Date("<%= @post.created_at %>").toLocaleString(undefined, options)
+    document.getElementById("modified_at").textContent =
+      new Date("<%= @post.modified_at %>").toLocaleString(undefined, options)
+  })
+</script>
+
+<section class="content">
+  <div style="text-align: center;display: block;margin-bottom: 1rem;">
+    <div style="display: inline-block;padding: 1rem;">
+      <h1 style="margin-bottom: 0.25rem;"><%= @post.title %></h1>
+      <div>Posted: <span id="created_at"><%= @post.created_at %></span></div>
+      <div>Updated: <span id="modified_at"><%= @post.modified_at %></span></div>
+      <hr style="margin-top: 1rem;">
+    </div>
+  </div>
+  <div><%= raw(@post.body) %></div>
+  <hr style="margin-bottom: 1rem;margin-top: 1.75rem;">
+</section>

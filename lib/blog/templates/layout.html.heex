@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Index</title>
+  <title :if={@title}><%= @title %></title>
+  <meta :if={@description} name="description" content={@description}>
   <link rel="stylesheet" href="/assets/modern-normalize.min.css">
   <link rel="stylesheet" href="/assets/highlight.css">
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="icon" type="image/x-icon" href="/assets/matcha-head.gif">
+  <%= if @header_content, do: @header_content %>
 </head>
 <body>
   <header>
@@ -17,25 +19,17 @@
       </a>
       <div>
         <h1><a href="/">Moosieus' Things n' Stuff</a></h1>
-        <div style="display: flex; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.75rem;">
           <a class="link" href="https://github.com/Moosieus" target="_blank">github</a>
           <a class="link" href="https://www.linkedin.com/in/cameron-duley/" target="_blank">linkedin</a>
+          <a class="link" href="/assets/Cameron Duley Resume.pdf" target="_blank">resume</a>
         </div>
       </div>
     </nav>
   </header>
-  <main class="container index">
-    <%= for post <- @posts do %>
-      <section>
-        <h2 style="border-bottom: none;"><a href="/<%= post.filename %>.html"><%= post.title %></a></h2>
-        <div style="color: var(--text-muted);"><%= DateTime.to_date(post.created_at) %></div>
-        <%= if post.description do %>
-          <p><%= post.description %></p>
-        <% end %>
-      </section>
-      <hr>
-    <% end %>
+  <main class="container">
+    <%= @inner_content %>
   </main>
-  <footer>© Moosieus 2024</footer>
+  <footer>© Moosieus <%= @copyright_date %></footer>
 </body>
 </html>

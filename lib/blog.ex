@@ -1,11 +1,8 @@
 defmodule Blog do
   @moduledoc false
-  alias Blog.Post
-
-  require Logger
 
   use NimblePublisher,
-    build: Post,
+    build: Blog.Post,
     from: Path.absname("content/**/*.md"),
     as: :posts,
     highlighters: [:makeup_elixir, :makeup_erlang],

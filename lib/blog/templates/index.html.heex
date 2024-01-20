@@ -1,0 +1,34 @@
+<script>
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const date_tags = document.querySelectorAll(".date").forEach(function(tag) {
+      tag.textContent =
+        new Date(tag.textContent).toLocaleString(undefined, options)
+    })
+  })
+</script>
+
+<section class="index">
+  <%= for post <- @posts do %>
+    <section>
+      <h2 style="border-bottom: none;"><a href={"/#{post.filename}.html"}><%= post.title %></a></h2>
+      <div style="color: var(--text-muted);">
+        Posted: <span class="date"><%= post.created_at %></span>
+      </div>
+      <div style="color: var(--text-muted);padding-bottom:1rem;">
+        Updated: <span class="date"><%= post.modified_at %></span>
+      </div>
+      <%= if post.description do %>
+        <p><%= post.description %></p>
+      <% end %>
+    </section>
+    <hr>
+  <% end %>
+</section>

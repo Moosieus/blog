@@ -1,6 +1,5 @@
 defmodule Blog.Post do
   require Logger
-  require EEx
 
   @enforce_keys [
     :author,
@@ -23,16 +22,14 @@ defmodule Blog.Post do
   ]
 
   @type t :: %Blog.Post{
-    author: String.t(),
-    contributors: list(String.t()),
-    title: String.t(),
-    body: String.t(),
-    created_at: DateTime.t(),
-    modified_at: DateTime.t(),
-    filename: String.t()
-  }
-
-  EEx.function_from_file(:def, :exec, "lib/blog/post.eex", [:assigns])
+          author: String.t(),
+          contributors: list(String.t()),
+          title: String.t(),
+          body: String.t(),
+          created_at: DateTime.t(),
+          modified_at: DateTime.t(),
+          filename: String.t()
+        }
 
   def build(filename, attrs, body) do
     {author, contributors} = authors_and_contributors(filename)

@@ -24,7 +24,8 @@ defmodule Blog.MixProject do
       {:nimble_publisher, "~> 1.0"},
       {:makeup_elixir, ">= 0.0.0"},
       {:makeup_erlang, ">= 0.0.0"},
-      {:file_system, "~> 1.0", only: :test},
+      {:tz, "~> 0.26.5"},
+      {:phoenix_live_view, "~> 0.20.0"}
     ]
   end
 end
