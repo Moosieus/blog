@@ -138,6 +138,11 @@ h4 {
   font-weight: 600;
 }
 
+h5 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 strong {
   font-weight: 700;
 }
@@ -196,6 +201,11 @@ hr {
 .content h4 {
   line-height: 1.1;
   margin-bottom: 0.25rem;
+}
+
+.content h5 {
+  line-height: 1.1;
+  margin-bottom: 0.125rem;
 }
 
 .content p {
