@@ -35,6 +35,8 @@ jobs:
     # Check out the code.
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     # Define how to cache deps. Restores existing cache if present.
     - name: Cache deps
       id: cache-deps
