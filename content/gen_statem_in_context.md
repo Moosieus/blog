@@ -4,6 +4,7 @@
   order_priority: 3
 }
 ---
+## Preface
 In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.
 
 ## Foundations of :gen_statem
@@ -14,16 +15,16 @@ Elixir has processes. Each has its own isolated memory, and they communicate (or
 - Messages are handled in the order received.
 
 `:gen_statem` is an abstraction of a state machine atop `GenServer`. By specifying:
-- The possible states a `GenServer` can be in
-- What messages it can handle in what states
-- How those messages transition our `GenServer` from one state to the next
+- The possible states a `GenServer` can be in.
+- What messages it can handle in what states.
+- How those messages transition our `GenServer` from one state to the next.
 
 We gain the following amenities:
 - Postponing the handling messages until our `GenServer` is in a state to handle them.
-- Comprehensive and easy to use timeouts
-- State enter calls which always perform some task when its state is entered
-- Colocated callback functions for each state
-- Easy to use internal messaging and handling
+- Comprehensive and easy to use timeouts.
+- State enter calls which always perform some task when its state is entered.
+- Colocated callback functions for each state.
+- Easy to use internal messaging and handling.
 
 ## When's it appropriate to use?
 The official [:gen_statem behaviour docs](https://www.erlang.org/doc/design_principles/statem#when-to-use-gen_statem) provide guidance here, but I'd like to provide more concrete examples.

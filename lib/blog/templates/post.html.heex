@@ -15,16 +15,22 @@
   })
 </script>
 
-<section class="content">
-  <div style="text-align: center;display: block;margin-bottom: 1rem;">
-    <div style="display: inline-block;padding: 1rem;">
-      <h1 style="margin: 0.5rem 0;"><%= @post.title %></h1>
-      <div>Posted: <span id="created_at"><%= @post.created_at %></span></div>
-      <div>Updated: <span id="modified_at"><%= @post.modified_at %></span></div>
-      <div><a href={"https://github.com/Moosieus/blog/commits/main/content/#{@post.filename}.md"} target="_blank">Changelog</a></div>
-      <hr style="margin-top: 1rem;">
+<article class="content">
+  <header style="text-align: center;display: block;">
+    <div style="display: inline-block;padding: 1rem 1rem 0 1rem;">
+      <h1 style="margin-bottom: 0;"><%= @post.title %></h1>
+      <div class="text-muted">
+        Posted: <span id="created_at"><%= @post.created_at %></span>
+      </div>
+      <div class="text-muted">
+        Updated: <span id="modified_at"><%= @post.modified_at %></span>
+      </div>
+      <div>
+        <a href={"https://github.com/Moosieus/blog/commits/main/content/#{@post.filename}.md"} target="_blank">Changelog</a>
+      </div>
+      <hr style="margin: 2rem 0;">
     </div>
-  </div>
-  <div><%= raw(@post.body) %></div>
+  </header>
+  <section class="md"><%= raw(@post.body) %></section>
   <hr style="margin-bottom: 1rem;margin-top: 1.75rem;">
-</section>
+</article>

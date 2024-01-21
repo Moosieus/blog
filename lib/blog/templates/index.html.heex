@@ -16,9 +16,10 @@
 </script>
 
 <section class="index">
+  <h1>Blog</h1>
   <%= for post <- @posts do %>
     <section>
-      <h2 style="border-bottom: none;"><a href={"/#{post.filename}"}><%= post.title %></a></h2>
+      <h2><a href={"/#{post.filename}"}><%= post.title %></a></h2>
       <div class="text-muted">
         Updated: <span class="date"><%= post.modified_at %></span>
       </div>

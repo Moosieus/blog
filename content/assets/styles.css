@@ -5,7 +5,7 @@
 
 :root {
   --text-color: 0,0,0;
-  --text-muted: 66, 66, 66;
+  --text-muted: 111, 111, 111;
   --link-color-i: 141, 47, 90;
   --background: 252, 249, 218;
   --accent-muted: 150, 150, 150;
@@ -27,7 +27,7 @@ html {
   color: rgb(var(--text-color));
   font-family: "Readex Pro";
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 body {
@@ -37,30 +37,30 @@ body {
   background: rgb(var(--background));
 }
 
-header {
+nav {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
 }
 
-header nav {
+nav {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   align-items: center;
 }
 
-header nav h1 {
+nav h1 {
   font-size: 1.25rem;
 }
 
 @media screen and (min-width: 640px) {
-  header nav h1 {
+  nav h1 {
     font-size: 1.75rem;
   }
 }
 
-header nav h1 a {
+nav h1 a {
   color: rgb(var(--text-color));
   text-decoration: none;
 }
@@ -121,8 +121,12 @@ footer {
   font-weight: 200 700;
 }
 
+.md h2:first-of-type {
+  margin-top: 0;
+}
+
 h1 {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 
@@ -239,6 +243,10 @@ hr {
 }
 
 .index p {
+  margin-bottom: 1rem;
+}
+
+.index h1 {
   margin-bottom: 1rem;
 }
 
