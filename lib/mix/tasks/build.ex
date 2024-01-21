@@ -9,6 +9,12 @@ defmodule Mix.Tasks.Build do
         File.cp_r!("./content/assets", "./static/assets")
         File.write!("./static/assets/highlight.css", Makeup.stylesheet(:monokai_style, "makeup"))
 
+        Esbuild.install_and_run(:default, [])
+
+        File.rm!("./static/assets/modern-normalize.min.css")
+        File.rm!("./static/assets/highlight.css")
+        File.rm!("./static/assets/styles.css")
+
         Blog.Templates.build()
       end)
 

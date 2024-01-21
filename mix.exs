@@ -25,7 +25,8 @@ defmodule Blog.MixProject do
       {:makeup_elixir, ">= 0.0.0"},
       {:makeup_erlang, ">= 0.0.0"},
       {:tz, "~> 0.26.5"},
-      {:phoenix_live_view, "~> 0.20.0"}
+      {:phoenix_live_view, "~> 0.20.0"},
+      {:esbuild, "~> 0.7"}
     ]
   end
 end
