@@ -1,0 +1,74 @@
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  MIX_ENV: prod
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    strategy:
+      # Specify the OTP and Elixir versions to use when building åand running the workflow steps.
+      matrix:
+        otp: ['26.0.2']       # Define the OTP version [required]
+        elixir: ['1.16.0']    # Define the elixir version [required]
+    steps:
+    # Setup Elixir + Erlang image as the base.
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    # Check out the code.
+    - name: Checkout code
+      uses: actions/checkout@v3
+    # Define how to cache deps. Restores existing cache if present.
+    - name: Cache deps
+      id: cache-deps
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-elixir-deps
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+    # Download project dependencies.
+    # If unchanged, uses the cached version.
+    - name: Install dependencies
+      run: mix deps.get
+    # Define how to cache the `_build` directory.
+    # After the first run, this speeds up tests runs a lot.
+    # This includes not re-compiling our project's downloaded deps every run.
+    - name: Cache compiled build
+      id: cache-build
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-compiled-build
+      with:
+        path: _build
+        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{ env.cache-name }}-
+          ${{ runner.os }}-mix-
+    # Compile the project treating any warnings as errors.
+    # Customize this step if a different behavior is desired.
+    - name: Compiles without warnings
+      run: mix compile --warnings-as-errors
+    # Step: Build!
+    - name: Build
+      run: mix build
+    # Publish!
+    - name: Publish
+      uses: cloudflare/pages-action@1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: blog
+        directory: static
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
