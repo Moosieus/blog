@@ -5,23 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title :if={@title}><%= @title %></title>
   <meta :if={@description} name="description" content={@description}>
-  <style>
-    @font-face {
-      font-family: 'JetBrains Mono';
-    	font-display: swap;
-    	font-weight: 400;
-    	font-stretch: normal;
-    	font-style: normal;
-    	src: url('/assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
-    }
-
-    @font-face {
-      font-family: 'Readex Pro';
-    	src: url('/assets/fonts/Readexpro[HEXP,wght].woff2') format('woff2 supports variations'),
-    	     url('/assets/fonts/Readexpro[HEXP,wght].woff2') format('woff2-variations');
-      font-weight: 200 700;
-    }
-  </style>
   <link rel="stylesheet" href="/assets/site.min.css">
   <link rel="icon" type="image/x-icon" href="/assets/matcha-head.gif">
   <%= if @header_content, do: @header_content %>
