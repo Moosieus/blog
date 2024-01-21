@@ -1,4 +1,4 @@
 source .env
 mix build
 mix esbuild default
-npx wrangler pages publish ./static --project-name=blog
+npx wrangler pages deploy ./static --project-name=blog
