@@ -17,10 +17,10 @@ jobs:
       contents: read
       deployments: write
     strategy:
-      # Specify the OTP and Elixir versions to use when building åand running the workflow steps.
+      # Specify the OTP and Elixir versions to use when building and running the workflow steps.
       matrix:
-        otp: ['26.0.2']       # Define the OTP version [required]
-        elixir: ['1.16.0']    # Define the elixir version [required]
+        otp: ['26.0.2']
+        elixir: ['1.16.0']
     steps:
     # Setup Elixir + Erlang image as the base.
     - name: Set up Elixir
@@ -76,3 +76,5 @@ jobs:
         projectName: blog
         directory: static
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        wranglerVersion: '3'
