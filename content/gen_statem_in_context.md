@@ -4,6 +4,13 @@
   order_priority: 3
 }
 ---
+## *Update!*
+Jose Valim [announced on Twitter](https://twitter.com/josevalim/status/1749453086232351173) that OTP 27 will generate its documentation with ExDoc! This includes the `gen_statem` docs!
+
+The proof of concept docs are [much nicer on the eyes](https://erlang.github.io/prs/8026/lib/stdlib-5.2/doc/html/gen_statem.html#t:action/0) compared to their [former counterparts](https://www.erlang.org/doc/man/gen_statem.html#type-action) especially the type specifications. The syntax is still Erlang (they are Erlang docs after all), so there's still some overhead for the uninitiated Elixir dev.
+
+Once they're official, I'll probably replace the links to the OTP docs herein with their ExDoc counterparts.
+
 ## Preface
 In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.
 
