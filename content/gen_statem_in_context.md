@@ -4,13 +4,6 @@
   order_priority: 3
 }
 ---
-## *Update!*
-Jose Valim [announced on Twitter](https://twitter.com/josevalim/status/1749453086232351173) that OTP 27 will generate its documentation with ExDoc! This includes the `gen_statem` docs!
-
-The proof of concept docs are [much nicer on the eyes](https://erlang.org/documentation/doc-15.0-rc1/lib/stdlib-6.0/doc/html/gen_statem.html#t:action/0) compared to their [former counterparts](https://www.erlang.org/doc/man/gen_statem.html#type-action) especially the type specifications. The syntax is still Erlang (they are Erlang docs after all), so there's still some overhead for the uninitiated Elixir dev.
-
-Once they're official, I'll probably replace the links to the OTP docs herein with their ExDoc counterparts.
-
 ## Preface
 In this post, I hope to capture some of the institutional knowledge around `:gen_statem` I wish I had when first using it. Overall it's a really awesome behaviour particularly for dealing with network connections and protocols.
 
@@ -87,13 +80,15 @@ Initially it can be difficult to follow `:gen_statem`'s syntax, specifically:
 
 The docs outline all of these, but it requires lots of jumping back and forth and a careful eye to translate.
 
-### Lack of termination reports
-By default Elixir won't log termination reports for modules using `:gen_statem`, but you can patch them in with [this translator from nostrum](https://github.com/Kraigie/nostrum/blob/master/lib/nostrum/state_machine_translator.ex). Add it with:
+### Lack of termination reports (prior to Elixir 1.17)
+Before 1.17, Elixir wouldn't log termination reports for `:gen_statem` processes by default. They could be patched in with [this translator from nostrum](https://github.com/Kraigie/nostrum/blob/master/lib/nostrum/state_machine_translator.ex), and this line:
 ```elixir
 Logger.add_translator({StateMachineTranslator, :translate})
 ```
 
 A similar effect can be had by [setting :handle_sasl_reports to true](https://hexdocs.pm/logger/1.16.0/Logger.html#module-boot-configuration), but this logs lots of extra unecessary information that obfuscates your logs.
+
+[*This issue has been patched in Elixir 1.17*](https://github.com/elixir-lang/elixir/pull/13451).
 
 ## How often is :gen_statem used?
 The following are searches for invocations of `:gen_statem` and `GenServer` (at time of writing) across Elixir and Erlang repos on github (excluding forks and archives):
@@ -111,6 +106,8 @@ Calculating the ratios, we net some interesting results:
 - ~50:1 `GenServer`'s to `:gen_statem`'s for both languages.
 - ~26:1 `gen_server`'s to `gen_statem`'s for Erlang.
 - ~22:1 `GenServer`'s to `:gen_statem`/`:gen_fsm`'s for both languages.
+
+*Note: Results as of January of 2024.*
 
 As an interesting tidbit, [Joe Armstrong's 2003 PHD thesis](https://erlang.org/download/armstrong_thesis_2003.pdf) also breaks down some projects by behaviour. It's a comparatively small telecom adjacent sampling, landing at 122+56 `gen_server`'s to 1+10 `gen_fsm`'s, making a ratio of ~16:1.
 
