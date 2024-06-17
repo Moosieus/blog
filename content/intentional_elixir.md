@@ -28,13 +28,13 @@ Later he expands on it precisely:
 > ```
 > Given this definition `lookup/2` was used in three different contexts:
 > 
-> #### 1. For data retrieval—the programmer would write:
+> #### 1. For *data retrieval*—the programmer would write:
 > ```elixir
 > {:ok, value} = lookup(key, dict)
 > ```
-> here `lookup/2` is used for to extract an item with a known key from the dictionary. `key` should be in the dictionary, it is a programming error if this is not the case, so an exception in generated if the key is not found.
+> here `lookup/2` is used for to extract an item with a known key from the dictionary. `key` should be in the dictionary, it is a programming error if this is not the case, so an exception (`MatchError`) in generated if the key is not found.
 > 
-> #### 2. For searching — the code fragment:
+> #### 2. For *searching* — the code fragment:
 > ```elixir
 > case lookup(key, dict) do
 >   {:ok, value} ->
@@ -44,7 +44,7 @@ Later he expands on it precisely:
 > end
 > ```
 > searches the dictionary and we do not know if `key` is present or not—it is not a programming error if the key is not in the dictionary.
-> #### 3. For testing the presence of a key—the code fragment:
+> #### 3. For *testing the presence of a key—the* code fragment:
 > ```elixir
 > case lookup(key, dict) do
 >   {:ok, _} ->
@@ -55,7 +55,7 @@ Later he expands on it precisely:
 > ```
 > tests to see if a specific key `key` is in the dictionary.
 >
-> When reading thousands of lines of code like this we begin to worry about intentionality—we ask ourselves the question “what did the programmer intend by this line of code?”—by analysing the above three usages of the code we arrive at one of the answers data retrieval, a search or a test. There are a number of dicerent contexts in which keys can be looked up in a dictionary. In one situation a programmer knows that a specific key should be present in the dictionary and it is a programming error if the key is not in the dictionary and the program should terminate. In another situation the programmer does not know if the keyed item is in the dictionary and their program must allow for the two cases where the key is present or not.
+> When reading thousands of lines of code like this we begin to worry about intentionality—we ask ourselves the question “what did the programmer intend by this line of code?”—by analysing the above three usages of the code we arrive at one of the answers data retrieval, a search or a test. There are a number of different contexts in which keys can be looked up in a dictionary. In one situation a programmer knows that a specific key should be present in the dictionary and it is a programming error if the key is not in the dictionary and the program should terminate. In another situation the programmer does not know if the keyed item is in the dictionary and their program must allow for the two cases where the key is present or not.
 >
 > Instead of guessing the programmer’s intentions and analyzing the code, a better set of library routines is:
 > ```elixir
@@ -63,41 +63,13 @@ Later he expands on it precisely:
 > @spec search(key::any(), dict::map()) :: {:ok, value} | :not_found
 > @spec is_key(key::any(), dict::map()) :: boolean()
 > ```
-> Which precisely expresses the intention of the programmer—here no guesswork or program analysis is involved, we clearly read what was in-tended.
 >
-> It might be noted that `fetch!` can be implemented in terms of `search` and vice versa. If `fetch!` is assumed primitive we can write:
-> ```elixir
-> def search(key, dict) do
->   try do
->     value = fetch!(key, dict)
->     {:found, value}
->   rescue
->     e ->
->       :not_found
->   end
-> end
-> ```
-> This is not really good code, since first we generate an exception (which should signal that the program is in error) and then we correct the error.
-> 
-> Better is:
-> ```elixir
-> def find!(key, dict) do
->   case search(key, dict) do
->     {:ok, value} ->
->       value
->     :not_found -> 
->       raise # NotFoundError...
->   end
-> end
-> ```
-> Now precisely one exception is generated which represents an error.
+> Which precisely expresses the intention of the programmer—here no guesswork or program analysis is involved, we clearly read what was intended.
 
-### Takeaways
+Elixir's standard library reflects these lessons even today, take for example the `Map` module:
 
-#### Granularity
-I think it's important to highlight just how granularly intentional programming can be effectively applied, even for something as fundamental as data access. Elixir's standard library has many functions that reflect this, including direct workalikes to the examples above:
 ```elixir
-# here's some placeholder data
+# sample data
 x = %{
   "foo" => "bar",
   :pi => 3.14,
@@ -105,14 +77,17 @@ x = %{
 }
 ```
 
-For *data retrieval* where an absent key is exceptional (unlikely and/or dramatically wrong), there's `Enum.fetch!/2`. With this function, we can forego handling the error and fall back on "let it crash":
+`Map.fetch!/2` expresses the intent of known *data retrieval*. The key we're fetching *must exist*, and its absence is dramatically wrong that it's not worth handling:
 ```elixir
-value = Enum.fetch!(x, :pi) # or x.pi
+value = Map.fetch!(x, :pi) # 3.14
+
+Map.fetch!(x, :phi)
+# ** (KeyError) key :phi not found in: %{:pi => 3.14, "foo" => "bar", ...}
 ```
 
-For *searching*, `Enum.fetch/2` lets us neatly handle the not found case:
+`Map.fetch/2` expresses the intent of *searching*, and lets us neatly handle the not-found case:
 ```elixir
-case Enum.fetch(x, "foo") do
+case Map.fetch(x, "foo") do
   {:ok, value} ->
     # do something with value
   :error ->
@@ -120,7 +95,7 @@ case Enum.fetch(x, "foo") do
 end
 ```
 
-For *testing the presence of a key* there's respective functions for different collection types such as `Map.has_key?/2`, `Keyword.has_key/2`, and, `List.key_member?/3`:
+`Map.has_key?/2` *tests for the presence of a key* and explicitly so:
 ```elixir
 if Map.has_key?(x, :expiration_date) do
   # x is perishable
@@ -129,6 +104,6 @@ else
 end
 ```
 
-Even these small variations on map access go a long way. (Write a conclusion here, dovetail into applying intentional functions in our own code).
+I think it's important to highlight how granular intentional programming's applied here, and the clarity it yields. These functions are merely subtle variations on a map dereference (`x[key]`), but they all have something to say.
 
 ### Intentional functions in with clauses and pipes
