@@ -93,34 +93,26 @@ Later he expands on it precisely:
 > Now precisely one exception is generated which represents an error.
 
 ### Takeaways
-First and foremost, I think it's important to highlight just how granularly intentional programming can be effectively applied, even for a simple data access. I'd argue that much of Elixir's standard library reflects intentional programming. The most immediate examples are in the Collections and Enumerables modules, take for example Elixir's [Map](https://hexdocs.pm/elixir/Map.html) module:
 
+#### Granularity
+I think it's important to highlight just how granularly intentional programming can be effectively applied, even for something as fundamental as data access. Elixir's standard library has many functions that reflect this, including direct workalikes to the examples above:
 ```elixir
 # here's some placeholder data
 x = %{
   "foo" => "bar",
   :pi => 3.14,
-  "inventory" => 37,
+  :expiration_date => Date.utc_today()
 }
 ```
 
-We can use the Access behaviour, which returns `nil` if the key doesn't exist:
+For *data retrieval* where an absent key is exceptional (unlikely and/or dramatically wrong), there's `Enum.fetch!/2`. With this function, we can forego handling the error and fall back on "let it crash":
 ```elixir
-x["foo"] # "bar"
-x["missing_key"] # nil
+value = Enum.fetch!(x, :pi) # or x.pi
 ```
 
-`Map.get/3` is useful when another zero value's preferable:
+For *searching*, `Enum.fetch/2` lets us neatly handle the not found case:
 ```elixir
-inventory = Map.get(x, "inventory", 0)
-# absent inventory equates to zero
-```
-
-`x["foo"] ?? 0;`
-
-`Map.fetch/2` lets us neatly handle our does-not-exist case:
-```elixir
-case Map.fetch(x, "foo") do
+case Enum.fetch(x, "foo") do
   {:ok, value} ->
     # do something with value
   :error ->
@@ -128,13 +120,15 @@ case Map.fetch(x, "foo") do
 end
 ```
 
-`Map.fetch!/2` is useful when an absent key is exceptional (unlikely + dramatically wrong). We can forego handling the error and fall back on "Let it Crash!":
+For *testing the presence of a key* there's respective functions for different collection types such as `Map.has_key?/2`, `Keyword.has_key/2`, and, `List.key_member?/3`:
 ```elixir
-value = Map.fetch!(x, :pi)
-# do something with value
+if Map.has_key?(x, :expiration_date) do
+  # x is perishable
+else
+  # x is non-perishable
+end
 ```
 
 Even these small variations on map access go a long way. (Write a conclusion here, dovetail into applying intentional functions in our own code).
 
 ### Intentional functions in with clauses and pipes
-
