@@ -106,4 +106,6 @@ end
 
 I think it's important to highlight how granular intentional programming's applied here, and the clarity it yields. These functions are merely subtle variations on a map dereference (`x[key]`), but they all have something to say.
 
+*I may want to substitute in real-world examples from Github. I probably want to do that, real world context is paramount to the value here.*
+
 ### Intentional functions in with clauses and pipes
