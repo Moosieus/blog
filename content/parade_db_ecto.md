@@ -5,7 +5,7 @@
 }
 ---
 <div style="display:flex;justify-content:center;">
-  <img src="./assets/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="max-height:480px">
+  <img src="./assets/parade_db_ecto/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="max-height:480px">
   <!-- source: https://timelessmoon.getarchive.net/media/a-de-havilland-mosquito-pr-mk-xvi-of-no-140-squadron-raf-warms-up-its-engines-f28729 -->
 </div>
 
@@ -127,6 +127,8 @@ query
   }
 ]
 ```
+
+> *If you're absolutely curious what the original audio sounds like, here you are: [170](./assets/parade_db_ecto/4005-1724354632_853612500.0-call_27.m4a) and [375](./assets/parade_db_ecto/4005-1724355931_851337500.0-call_437.m4a). Be aware that they start with loud alert tones.*
 
 Overall **I'm quite pleased with the results thus far!**
 * Search indexes are handily created in migration files. ParadeDB transparently updates the search index when rows are inserted, updated, or deleted, while retaining ACID compliance. This obviates the need to maintain any synchronization or ETL pipeline between your database and search service.
