@@ -33,9 +33,9 @@ Dedicated search engines are standalone applications characterized by the follow
 
 Incumbent offerings in the search engine space include [Apache Solr](https://solr.apache.org/), [Elasticsearch](https://www.elastic.co/elasticsearch), and more recently [OpenSearch](https://opensearch.org/). All of these are built on top of Apache Lucene and the JVM. A newer wave of search engines has also come about, built on [Tantivy](https://github.com/quickwit-oss/tantivy) and Rust. Two prominent examples include [Meilisearch](https://www.meilisearch.com/) (focuses on simplicity) and [Quickwit](https://quickwit.io/) (focused on logs and object storage backing).
 
-A major drawback of search engines is that they must be kept synchronized:
-* Your application must reflect any creation, update, or deletion in your database to your search engine.
-* Small and large updates to search engines often necessitate different code paths. Small updates call incremental procedures whereas large updates often necessitate rebuilding and hot-swapping entire indexes.
+A major drawback of search engines is that they must be kept synchronized with your database:
+* Your application must reflect any creation, update, or deletion in your database to the search engine.
+* Small and large data pushes to search engines often require separate code paths. Small updates call incremental procedures, whereas large updates often necessitate rebuilding search indexes entirely.
 * Dissonance often occurs when either system provides some query functionality you need to utilize in the same context.
 * You must manage deploying and hosting any search engine, in addition to your existing infrastructure.
 
