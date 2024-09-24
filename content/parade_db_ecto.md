@@ -18,7 +18,7 @@ These methods are ideal for searching short strings such as product codes, addre
 * Fuzzy matching / [fuzzystrmatch](https://www.postgresql.org/docs/current/fuzzystrmatch.html) - Including Soundex, Metaphone, and Levenstein Distance.
 * Trigrams / [pg_tgrm](https://www.postgresql.org/docs/current/pgtrgm.html) - Measures the similarity of words based on 3-character segments.
 
-These methods have certain advantages when it comes to handling partial matches, misspellings, and phonetically similar names, but aren't suitable for searching longer text passages.
+They all have certain advantages when it comes to handling partial matches, misspellings, and phonetically similar names, but aren't suitable for searching longer text passages.
 
 ### Postgres Full Text Search
 Postgres' [Full Text Search](https://www.postgresql.org/docs/current/textsearch.html) is best characterized by its convenience-to-capability ratio. It accomodates basic document retrieval without the need to ETL your data to another service, but languishes in terms of capability and ranking of results.
