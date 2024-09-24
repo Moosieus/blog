@@ -12,18 +12,18 @@
 # Preface: Existing options for search
 I'd like to start by not-so-briefly outlining the existing approaches to text search and their use-cases.
 
-### Basic comparisons
-The first class of text search methods emphasize searching names and short strings. These include:
-* `LIKE` and `ILIKE` - Crude but sufficient operators for sub-string matching.
-* Fuzzy matching - Including Soundex, Metaphone, Double Metaphone, and Levenstein Distance.
-* Trigrams/`pg_tgrm` - Measures the similarity of words based on 3-character segments.
+### Basic string comparisons
+These methods are ideal for searching short strings such as product codes, addresses, or names:
+* `LIKE` and `ILIKE` - Operators that provide basic string and sub-string matching.
+* Fuzzy matching / [fuzzystrmatch](https://www.postgresql.org/docs/current/fuzzystrmatch.html) - Including Soundex, Metaphone, and Levenstein Distance.
+* Trigrams / [pg_tgrm](https://www.postgresql.org/docs/current/pgtrgm.html) - Measures the similarity of words based on 3-character segments.
 
-These methods are ideal for searching names and short strings where misspellings, partial matches, and phonetic similarity are concerned. They aren't suitable for searcing longer passages.
+These methods have certain advantages when it comes to handling partial matches, misspellings, and phonetically similar names, but aren't suitable for searching longer text passages.
 
 ### Postgres Full Text Search
 Postgres' [Full Text Search](https://www.postgresql.org/docs/current/textsearch.html) is best characterized by its convenience-to-capability ratio. It accomodates basic document retrieval without the need to ETL your data to another service, but languishes in terms of capability and ranking of results.
 
-### Dedicated Search Engines
+### Dedicated search engines
 Dedicated search engines are standalone applications characterized by the following:
 * They implement [BM25](https://en.wikipedia.org/wiki/Okapi_BM25) text search and ranking, the gold standard for search results.
 * Support a variety of data types for querying, sorting, and analysis.
