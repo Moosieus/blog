@@ -4,12 +4,12 @@
   order_priority: 1
 }
 ---
-<div style="display:flex;justify-content:center;" style="max-height:480px">
-  <img src="./assets/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI">
+<div style="display:flex;justify-content:center;">
+  <img src="./assets/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="max-height:480px">
   <!-- source: https://timelessmoon.getarchive.net/media/a-de-havilland-mosquito-pr-mk-xvi-of-no-140-squadron-raf-warms-up-its-engines-f28729 -->
 </div>
 
-# Existing options for search
+# Preface: Existing options for search
 I'd like to start by not-so-briefly outlining the existing approaches to text search and their use-cases.
 
 ### Basic comparisons
