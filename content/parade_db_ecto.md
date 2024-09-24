@@ -29,7 +29,7 @@ Dedicated search engines are standalone applications characterized by the follow
 * Support a variety of data types for querying, sorting, and analysis.
 * Make it reasonably straightforward to perform complex queries.
 * Maintain fast response times over massive datasets using specialized data structures.
-* Offer some sort of horizontal sharding or scaling.
+* Offer some sort of horizontal scaling or sharding.
 
 Incumbent offerings in the search engine space include [Apache Solr](https://solr.apache.org/), [Elasticsearch](https://www.elastic.co/elasticsearch), and more recently [OpenSearch](https://opensearch.org/). All of these are built on top of Apache Lucene and the JVM. A newer wave of search engines has also come about, built on [Tantivy](https://github.com/quickwit-oss/tantivy) and Rust. Two prominent examples include [Meilisearch](https://www.meilisearch.com/) (focuses on simplicity) and [Quickwit](https://quickwit.io/) (focused on logs and object storage backing).
 
