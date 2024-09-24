@@ -14,9 +14,9 @@ I'd like to start by not-so-briefly outlining the existing approaches to text se
 
 ### Basic comparisons
 The first class of text search methods emphasize searching names and short strings. These include:
-* **The `LIKE` and `ILIKE`** - Crude but sufficient operators for sub-string matching.
-* **Fuzzy Matching** - Including Soundex, Metaphone, Double Metaphone, and Levenstein Distance.
-* **Trigrams / `pg_tgrm`** - Measures the similarity of words based on 3-character segments.
+* `LIKE` and `ILIKE` - Crude but sufficient operators for sub-string matching.
+* Fuzzy matching - Including Soundex, Metaphone, Double Metaphone, and Levenstein Distance.
+* Trigrams / `pg_tgrm` - Measures the similarity of words based on 3-character segments.
 
 These methods are ideal for searching names and short strings where misspellings, partial matches, and phonetic similarity are concerned. They aren't suitable for searcing longer passages.
 
