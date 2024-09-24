@@ -4,15 +4,18 @@
   order_priority: 1
 }
 ---
-## Existing options for search
-I'd like to start by briefly outlining the existing approaches to text search and their use-cases.
+<div style="display:flex;justify-content:center;">
+  <img src="./assets/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="max-height:480px">
+  <!-- source: https://timelessmoon.getarchive.net/media/a-de-havilland-mosquito-pr-mk-xvi-of-no-140-squadron-raf-warms-up-its-engines-f28729 -->
+</div>
 
-### Names and short strings
+# Existing options for search
+I'd like to start by not-so-briefly outlining the existing approaches to text search and their use-cases.
+
+### Basic comparisons
 The first class of text search methods emphasize searching names and short strings. These include:
 * **The `LIKE` and `ILIKE`** - Crude but sufficient operators for sub-string matching.
-* **Levenstein Distance** - Measures the distance between words based on the number of character edits.
-* **Soundex** - Made for matching similar sounding English names ([patented 1918](https://en.wikipedia.org/wiki/Soundex)).
-* **Metaphone**  and **Double Metaphone** - Improved derivatives of Soundex.
+* **Fuzzy Matching** - Including Soundex, Metaphone, Double Metaphone, and Levenstein Distance.
 * **Trigrams / `pg_tgrm`** - Measures the similarity of words based on 3-character segments.
 
 These methods are ideal for searching names and short strings where misspellings, partial matches, and phonetic similarity are concerned. They aren't suitable for searcing longer passages.
@@ -20,64 +23,122 @@ These methods are ideal for searching names and short strings where misspellings
 ### Postgres Full Text Search
 Postgres' [Full Text Search](https://www.postgresql.org/docs/current/textsearch.html) is best characterized by its convenience-to-capability ratio. It accomodates basic document retrieval without the need to ETL your data to another service, but languishes in terms of capability and quality of results ranking.
 
-### Search Engines
-These are dedicated applications characterized by the following:
+### Dedicated Search Engines
+Dedicated search engines are standalone applications characterized by the following:
 * Implement [BM25](https://en.wikipedia.org/wiki/Okapi_BM25) text search and ranking, the gold standard for ranking search results.
-* Support a variety of data types that can be sorted and quickly queried.
-* Make it easy to perform complex queries without incurring high performance overheads.
-* Offer fast analytical features like facets, aggregates, and statistics.
-* Use data structures expressly tailored for retrieving search results quickly.
-* Providing autocomplete and spell checking for queries against indexed data.
-* Offer some sort of horizontal scaling or sharding.
+* Support a variety of data types that can be queried, sorted, and analyzed.
+* Make it relatively easy to perform complex queries and some analytics.
+* Maintain fast response times over massive datasets using specialized data structures.
+* Offer some sort of horizontal sharding or scaling.
 
-Incumbents in the search engine space are all based on the venerable [Apache Lucene](https://lucene.apache.org/) and run on the JVM:
-* [Elasticsearch](https://www.elastic.co/elasticsearch)
-* [OpenSearch](https://opensearch.org/) (fork of Elastic)
-* [Apache Solr](https://solr.apache.org/)
+Incumbent offerings in the search engine space include [Apache Solr](https://solr.apache.org/), [Elasticsearch](https://www.elastic.co/elasticsearch), and more recently [OpenSearch](https://opensearch.org/). All of these are built on top of Apache Lucene and the JVM. A newer wave of search engines has also come about, built on [Tantivy](https://github.com/quickwit-oss/tantivy) and Rust. Two prominent examples include [Meilisearch](https://www.meilisearch.com/) (focuses on simplicity) and [Quickwit](https://quickwit.io/) (focused on logs and object storage backing).
 
-A new wave of search engines are rising to prominence built [Tantivy](https://github.com/quickwit-oss/tantivy), which is written in Rust:
-* [Meilisearch](https://www.meilisearch.com/) (simpler alternative to Elastic)
-* [Quickwit](https://quickwit.io/) (focused on logs w/ object storage backing)
-
-An increasingly prominent offer in search engines is "hybrid search", which combines BM25 results with semantic search results.
-
-### The development cost of search engines
-A major drawback of search engines is that they operate independently of your database:
+A major drawback of search engines is that they must be kept synchronized:
 * Your application must reflect any creation, update, or deletion in your database to your search engine.
 * Small and large updates to search engines often necessitate different code paths. Small updates call incremental procedures whereas large updates often necessitate rebuilding and hot-swapping entire indexes.
 * Dissonance often occurs when either system provides some query functionality you need to utilize in the same context.
-* Your must manage deploying and hosting any search engine, in addition to your existing infrastructure.
+* You must manage deploying and hosting any search engine, in addition to your existing infrastructure.
 
-*A fair amount of marketing and engineering effort goes into*
+# Introducing ParadeDB
+[ParadeDB](https://www.paradedb.com/) is a set of extensions that add pretty amazing search and analytics features to Postgres. In particular, ParadeDB embeds Tantivy as an extension via [pgrx](https://github.com/pgcentralfoundation/pgrx).
 
-# Have your cake and eat it too
-[ParadeDB](https://www.paradedb.com/) is a set of extensions that augments Postgres with pretty amazing search and analytical capabilities. In particular the `pg_search` extension embeds Tantivy directly into Postgres! This allows users to transparently derive search indexes from tables, and query them in PSQL, all with ACID guarantees!
+A few weeks ago I began exploring what it’d take to support ParadeDB in Ecto. My primary goal was to figure out how much work it'd take, and what the developer experience would feel like. I've created an initial implementation and [sample project](https://github.com/Moosieus/pdb_demo) to demonstrate. The sample project contains transcripts of publicly available police scanner calls generated by OpenAI's [Whisper](https://github.com/openai/whisper).
 
-This approach obviates a great deal of work with little compromise to functionality:
-* Developers are no longer burdened with the need to sync or ETL data from the database to an external search engine.
-* Search results are rows which compose fluently with SQL (`SELECT`, `JOIN`s, etc)
-* It’s possible to scale search workloads with logical replications of Postgres.
-
-# Bringing ParadeDB to Ecto
-A few weeks ago, I began exploring what it’d take to support ParadeDB in Ecto. My primary goal was to figure out what it'd take, and what the developer experience would feel like. It's taken a fair amount of work, but I'm actually quite pleased with the quality of results!
-
+A simple search query for all calls with the word "drive" or "driving" in them would look like this:
 ```elixir
 from(
   c in Call,
-  search: boolean(%{
-    must: parse(c, "transcript:ambulance"),
-    should: [
-      parse(c, "transcript:(ALS BLS)"),
-      phrase(c.transcript, ["routine", "response"])
-    ]
-  }),
-  preload: [:talk_group]
-)
+  search: parse(c, "transcript:drive")
+) |> Repo.all()
+```
+The above example uses ParadeDB's mini query language, which can be accessed via `parse/2`. More advanced and structured queries are also available.
+
+We could limit our search query to calls between 5 and 10 seconds long, and retrieve fewer fields using Ecto's existing `select/3`:
+```elixir
+from(
+  c in Call,
+  search: parse(c, "transcript:drive"),
+  search: int4range(c.call_length, 5, 10, "[]"),
+  select: {c.id, c.transcript}
+) |> Repo.all()
+```
+```elixir
+[
+  {423,
+   "Ambulance 725 probably was responding interperson from a fall. PLS, 15,320 Pine Orchard Drive, unit number 1 at Foxtrot."},
+  {172,
+   "Charlie here for truck inspection. We have on track transportation driving a white van with no logo. This is the first time. Please look out for us."},
+  {37,
+   "Morning, Sam. Go ahead. I have a hit and run on Woodfield and Deanna Drive and the Mary 2. I only have Mary 33 right now. All right. You can hold it."}
+]
 ```
 
-# Implementation Details
-I’m continuing to build out support for ParadeDB in these forks of ecto and ecto_sql.
+For a more **maximal demonstration**, here's a rather complex query:
+```elixir
+slop = 1
 
-The necessary changes were beyond the scope of fragment, so I had to tentatively settle for forking and modifying ecto and ecto_sql directly.
+query =
+  from(
+    c in Call,
+    search: boolean([
+      must: [
+        parse(c, "transcript:ambulance"),
+        disjunction_max([
+          boost(parse(c, "transcript:(BLS ALS)"), 10),
+          parse(c, "transcript:(fall)"),
+          phrase(c.transcript, ["routine", "response"], ^slop)
+        ])
+      ],
+    ])
+  )
 
-# Help Wanted
+Repo.all(query)
+```
+
+This query will:
+* Return calls with the word `"ambulance"` in them
+* Include at least one of: `"ALS"`, `"BLS"`, `"fall"`, or `"routine response"` within a word of one another.
+* Rank calls that mention `"ALS"` or `"BLS"` higher, having them appear first.
+* Map the results to `%Call{}` structs as like any other Ecto query.
+
+To show how the query can compose with the rest of SQL and Ecto, let's narrow the results somewhat to suit this post:
+
+```elixir
+query
+|> join(:inner, [c], tg in assoc(c, :talk_group))
+|> where([_, tg], ilike(tg.tag, "%dispatch%"))
+|> search([c, _], int4range(c.call_length, nil, 20, "(]")) # eq. to `where([c, _], c.call_length <= 20)`
+|> select([c, tg], %{id: c.id, text: c.transcript, duration: c.call_length, talk_group: tg.description})
+|> Repo.all()
+```
+```elixir
+[
+  %{
+    id: 170,
+    text: "Trader Joe's, 6831 Wisconsin Avenue, Suite 400, Cross Street, Stanford Street, Decrease LLC, ALS 1, Paramedic in 706, Ambulance 741, Bravo, Response 7, Alpha 1, Box 061, 1524.",
+    duration: 13,
+    talk_group: "7A2 Dispatch"
+  },
+  %{
+    id: 375,
+    text: "Are the mailboxes 4302 Randolph Road, Crosstown, Veras, Miller Road, Interperson, Firm of Fall, BOS, Ambulance 705, Response 701, Vox Air 21-2, 1545.",
+    duration: 11,
+    talk_group: "7A2 Dispatch"
+  }
+]
+```
+
+Overall **I'm quite pleased with the results thus far!**
+* Search indexes are handily created in migration files. ParadeDB transparently updates the search index when rows are inserted, updated, or deleted, while retaining ACID compliance. This obviates the need to maintain any synchronization or ETL pipeline between your database and search service.
+* Search queries compose quite fluently with the rest of SQL. This flexibility does introduce some performance considerations, but it's nice to even have the discretion available.
+* Ecto provides tons of features search engine clients often lack, providing an unparalleled (to my knowledge) developer experience.
+
+# Todo: 
+* I've hardly scratched the surface of what ParadeDB offers today:
+  * I've not exposed/mapped the BM25 ranks
+  * ParadeDB integrates with pg_vector to enable [hybrid search](https://docs.paradedb.com/api-reference/concepts/search#hybrid-search).
+  * Aggregates and facets (which remain enterprise features for now).
+  * ParadeDB's also offers analytical capabilities over columnar object storage files.
+* ParadeDB is just over a year old and has a small core team, so there's much growth ahead.
+* I’m continuing to build out support for ParadeDB with the aim of providing production-ready packages.
+* **Help Wanted!**
