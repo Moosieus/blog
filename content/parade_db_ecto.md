@@ -107,8 +107,14 @@ To show how the search query can compose with the rest of SQL and Ecto, let's na
 query
 |> join(:inner, [c], tg in assoc(c, :talk_group))
 |> where([_, tg], ilike(tg.tag, "%dispatch%"))
-|> search([c, _], int4range(c.call_length, nil, 20, "(]")) # eq. to `where([c, _], c.call_length <= 20)`
-|> select([c, tg], %{id: c.id, text: c.transcript, duration: c.call_length, talk_group: tg.description})
+#  work-alike to: where([c, _], c.call_length <= 20)
+|> search([c, _], int4range(c.call_length, nil, 20, "(]"))
+|> select([c, tg], %{
+  id: c.id,
+  text: c.transcript,
+  duration: c.call_length,
+  talk_group: tg.description
+})
 |> Repo.all()
 ```
 ```elixir
