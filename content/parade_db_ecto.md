@@ -5,7 +5,7 @@
 }
 ---
 <div style="display:flex;justify-content:center;">
-  <img src="./assets/parade_db_ecto/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="max-height:480px">
+  <img src="./assets/parade_db_ecto/mosquito-pr-mk-xvi.jpg" alt="Mosquito PR MK XVI" style="margin-bottom: 2rem;">
   <!-- source: https://timelessmoon.getarchive.net/media/a-de-havilland-mosquito-pr-mk-xvi-of-no-140-squadron-raf-warms-up-its-engines-f28729 -->
 </div>
 
