@@ -157,18 +157,3 @@ My tentative plan's to continue working on this with the goal of maintaining a *
 ParadeDB itself is only about a year old, so it's early days yet. The core team's small but talented, and they've fostered a community with lots of active contributions. Tantivy itself is also seeing continued improvement which will benefit ParadeDB in turn.
 
 The code I'm working on is located here: [moosieus/ecto](https://github.com/Moosieus/ecto) and [moosieus/ecto_sql](https://github.com/Moosieus/ecto_sql). 
-
-## Q&A
-I want to address some questions I've already gotten:
-
-**Why not just use fragments?**
-
-ParadeDB introduces the need to compose its own queries within Ecto, which is a more comprehensive problem than fragments can address.
-
-**Doesn't Postgrex support extensions?**
-
-Postgrex extensions allow users to encode and decode additional data types. ParadeDB's API uses Postgres' existing data types, so the extension API isn't of use here.
-
-**Wouldn't a fork not get updates from Ecto?**
-
-It'd be a *downstream* fork, meaning changes from Ecto would be merged in and published regularly. The versions might have to look a bit funny though, something like `3.10.2-paradedb-v1`. I haven't fully thought this part out.
