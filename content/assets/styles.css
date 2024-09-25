@@ -180,6 +180,7 @@ code.makeup {
   padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
   border-radius: 6px;
+  overflow-x: scroll;
 }
 
 .text-muted {
