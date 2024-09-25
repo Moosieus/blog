@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title :if={@title}><%= @title %></title>
+  <meta :if={@title} property="og:title" content={@title} />
   <meta :if={@description} name="description" content={@description}>
+  <meta :if={@description} property="og:description" content={@description}/>
+  <meta :if={@image} property="og:image" content={@image}>
   <link rel="stylesheet" href="/assets/site.min.css">
   <link rel="icon" type="image/x-icon" href="/assets/matcha-head.gif">
   <%= if @header_content, do: @header_content %>

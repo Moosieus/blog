@@ -21,6 +21,7 @@ defmodule Blog.Templates do
       render("#{post.filename}.html", "post", %{
         title: post.title,
         description: post.description,
+        image: post.image,
         post: post,
         copyright_date: post.created_at.year
       })
@@ -33,6 +34,7 @@ defmodule Blog.Templates do
     layout: {__MODULE__, "layout"},
     title: nil,
     description: nil,
+    image: nil,
     header_content: nil,
     copyright_date: DateTime.utc_now().year
   }

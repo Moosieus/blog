@@ -1,7 +1,8 @@
 %{
   title: "Putting a full power search engine in Ecto",
   description: "My diatribe about adding support for ParadeDB to Ecto",
-  order_priority: 1
+  order_priority: 1,
+  image: "https://moosie.us/assets/parade_db_ecto/mosquito-pr-mk-xvi.jpg"
 }
 ---
 <div style="display:flex;justify-content:center;">
