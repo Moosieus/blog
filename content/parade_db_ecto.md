@@ -161,11 +161,14 @@ The code I'm working on is located here: [moosieus/ecto](https://github.com/Moos
 ## Q&A
 I want to address some questions I've already gotten:
 
-#### Why not just use fragments?
+**Why not just use fragments?**
+
 ParadeDB introduces the need to compose its own queries within Ecto, which is a more comprehensive problem than fragments can address.
 
-#### Doesn't Postgrex support extensions?
+**Doesn't Postgrex support extensions?**
+
 Postgrex extensions allow users to encode and decode additional data types. ParadeDB's API uses Postgres' existing data types, so the extension API isn't of use here.
 
-#### Wouldn't a fork not get updates from Ecto?
+**Wouldn't a fork not get updates from Ecto?**
+
 It'd be a *downstream* fork, meaning changes from Ecto would be merged in and published regularly. The versions might have to look a bit funny though, something like `3.10.2-paradedb-v1`. I haven't fully thought this part out.
