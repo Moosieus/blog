@@ -10,7 +10,7 @@
 </div>
 
 # Preface: Existing options for search
-I'd like to start by not-so-briefly outlining the existing approaches to text search and their use-cases.
+I'd like to start by not-so-briefly outlining the existing approaches to text search and their use-cases, primarily around Postgres.
 
 ### Basic string comparisons
 These methods are ideal for searching short strings such as product codes, addresses, or names:
@@ -134,16 +134,32 @@ Overall **I'm quite pleased with the results thus far!**
 * Search indexes are handily created in migration files. ParadeDB transparently updates the search index when rows are inserted, updated, or deleted, while retaining ACID compliance. This obviates the need to maintain any synchronization or ETL pipeline between your database and search service.
 * Search queries compose quite fluently with the rest of SQL. This flexibility does introduce some performance considerations, but it's nice to even have the discretion available.
 * Ecto provides tons of features search engine clients often lack, providing an unparalleled (to my knowledge) developer experience.
+* Although not demonstrated here, it's possible to perform search queries across separate indexes and [JOIN them](https://docs.paradedb.com/api-reference/optimization/joins) as you would any other SQL query. 
 
 ## Current implementation and next steps
-My current progress only covers a basic subset of what's available in ParadeDB today. 
+The current Ecto implementation needs a lot more work before it’s production-ready. ParadeDB already has several especially lucrative features that I’ve yet to expose:
+* BM25 scores can be returned from ranked queries.
+* Searches also support hybrid search when used with pg_vector and AI generated embeddings.
+* Aggregates and facets are available, although limited to enterprise customers for now. (This will probably change at some point)
+* ParadeDB 0.10.0 just dropped, and adds lots of optimizations and features I've not been able to touch yet.
 
-# Todo: 
-* I've hardly scratched the surface of what ParadeDB offers today:
-  * I've not exposed/mapped the BM25 ranks
-  * ParadeDB integrates with pg_vector to enable [hybrid search](https://docs.paradedb.com/api-reference/concepts/search#hybrid-search).
-  * Aggregates and facets (which remain enterprise features for now).
-  * ParadeDB's also offers analytical capabilities over columnar object storage files.
-* ParadeDB is just over a year old and has a small core team, so there's much growth ahead.
-* I’m continuing to build out support for ParadeDB with the aim of providing production-ready packages.
-* **Help Wanted!**
+There’s also lots more getting the implementation *'generally correct'*, well tested, and working with all of Ecto’s existing features.
+
+## Looking forward
+My tentative plan's to continue working on this with the goal of maintaining a **downstream** fork of `:ecto` and `:ecto_sql` others can use. That said, I’m just one person, so it’ll probably be a while before I’m able to fully realize that. If any folks are interested in contributing to accelerate the process, drop a PR, or message me on the Elixir Slack or Discord, @Moosieus.
+
+ParadeDB itself is only about a year old, so it's early days yet. The core team's small but talented, and they've fostered a community with lots of active contributions. Tantivy itself is also seeing continued improvement which will benefit ParadeDB in turn.
+
+The code I'm working on is located here: [moosieus/ecto](https://github.com/Moosieus/ecto) and [moosieus/ecto_sql](https://github.com/Moosieus/ecto_sql). 
+
+## Q&A
+I want to address some questions I've already gotten:
+
+#### Why not just use fragments?
+ParadeDB introduces the need to compose its own queries within Ecto, which is a more comprehensive problem than fragments can address.
+
+#### Doesn't Postgrex support extensions?
+Postgrex extensions allow users to encode and decode additional data types. ParadeDB's API uses Postgres' existing data types, so the extension API isn't of use here.
+
+#### Wouldn't a fork not get updates from Ecto?
+It'd be a *downstream* fork, meaning changes from Ecto would be merged in and published regularly. The versions might have to look a bit funny though, something like `3.10.2-paradedb-v1`. I haven't fully thought this part out.
