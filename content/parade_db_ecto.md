@@ -101,7 +101,7 @@ This query will:
 * Rank calls that mention `"ALS"` or `"BLS"` higher, having them appear first.
 * Map the results to `%Call{}` structs as like any other Ecto query.
 
-To show how the query can compose with the rest of SQL and Ecto, let's narrow the results somewhat to suit this post:
+To show how the search query can compose with the rest of SQL and Ecto, let's narrow the results somewhat to suit this post:
 
 ```elixir
 query
