@@ -33,8 +33,8 @@ Any successor CMS would do well to either have these features built in, or maint
 ## Posts, Pages, and Taxonomy
 I would almost regard WordPress' heirarchy of posts, pages, post types, categories, tags, and custom post types as a solved problem. Emulating this structure may also drive conversion among existing users.
 
-## Interpreted templates and code (the most important bit)
-I'm going to do my best here to explain why PHP has the right execution model for CMS's like WordPress - bear with me.
+## Interpreted templates and code
+**This is probably the most important bit:** I'm going to do my best here to explain why PHP has the right execution model for CMS's like WordPress - bear with me.
 
 For starters, the full language is available from within server side rendered templates, akin to Embedded Ruby (.erb), JSX (.jsx), or Embedded Elixir (.eex). This is an important distinction compared to templating languages like Jinja or Go templates. Embedding full languages in templates mitigates context switching for developers and provides crucial flexibility. Server side rendering also dramatically simplifies things, and I consider it crucial.
 
