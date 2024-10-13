@@ -22,7 +22,7 @@ My first step in all but one WordPress project was to use the [classic editor](h
 I recall using the Gutenberg editor in earnest on exactly one WordPress project (maybe two), and it proved not worth the trouble.
 
 ## Pivotal Plugins
-There's lots of functionality relevant to most websites that WordPress doesn't implement, but are instead addressed by popular community plugins. Without them, I'd argue that WordPress would feel incomplete for most users. The two I most immediately recall are **Advanced Custom Fields (ACF)** and **Yoast SEO**:
+There's lots of functionality relevant to most websites that WordPress doesn't implement, but is instead addressed by popular community plugins. Without them, I'd argue that WordPress would feel incomplete for most users. The two I most immediately recall are **Advanced Custom Fields (ACF)** and **Yoast SEO**:
 
 - **ACF** allows users to define schemas for structured content in the database, and to incorporate them into templates.
 
