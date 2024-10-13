@@ -45,7 +45,7 @@ Finally, WordPress' template system seems a pretty successful pattern.
 ## Made for power users
 All of the points discussed so far are in service of this one: **WordPress excels for power users who cannot code**. Plenty of WordPress 'Developers' don't know a lick of PHP and have still made professional careers creating WordPress websites for clients. These are the users to optimize for.
 
-## What not to do
+## Miscellaneous pointers
 - Bet on HTML. Markdown is for nerds.
 
 - A modern work-alike would do well to curtail users from needing too many plugins, and to manage plugin dependencies with semver.
