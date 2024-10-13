@@ -14,7 +14,7 @@ I’d like to share some features and abstractions I think WordPress gets fundam
 For some context on my perspective:
 - I worked with WordPress on and off for about 4 years, but I didn’t start my career that way.
 - I have no skin in the CMS market.
-- I put maybe all of 15 minutes gathering my thoughts here.
+- I put maybe all of 15 minutes into gathering my thoughts here.
 
 ## The Classic Editor
 My first step in all but one WordPress project was to use the [classic editor](https://wordpress.org/plugins/classic-editor/) in lieu of the "Gutenberg" block editor that was introduced in 2018. In my opinion, the admin UI should serve as a data entry interface for HTML, markup, media, and text. A "WYSIWYG experience" is of less importance, and loading a preview page in a new tab is sufficient.
