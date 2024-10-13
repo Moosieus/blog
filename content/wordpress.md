@@ -36,14 +36,14 @@ I would almost regard WordPress' heirarchy of posts, pages, post types, categori
 ## Interpreted templates and code
 **This is probably the most important bit:** I'm going to do my best here to explain why PHP has the right execution model for CMS's like WordPress - bear with me.
 
-For starters, the full language is available from within server side rendered templates, akin to Embedded Ruby (.erb), JSX (.jsx), or Embedded Elixir (.eex). This is an important distinction compared to templating languages like Jinja or Go templates. Embedding full languages in templates mitigates context switching for developers and provides crucial flexibility. Server side rendering also dramatically simplifies things, and I consider it crucial.
+For starters, the full language is available from within server side rendered templates, akin to Embedded Ruby (.erb), JSX (.jsx), or Embedded Elixir (.eex). This is an important distinction compared to templating languages like Jinja or Go templates. Embedding full languages in templates mitigates context switching for developers and provides crucial flexibility. Server side rendering also dramatically simplifies things and is likewise vital.
 
-PHP is also entirely interpreted from a developer's perspective. More importantly, there's no need to compile PHP code. Loading novel PHP code into a WordPress website is almost a "drag and drop" operation (SFTP). There’s no need to fight a compiler toolchain or mismatching build system versions.
+PHP is also entirely interpreted from a developer's perspective. There's no need to compile code, fight a compiler toolchain, or resolve mismatching build system versions. Loading novel PHP code into a WordPress website is a simple matter of uploading it, and sometimes clicking a few buttons. 
 
 Finally, WordPress' template system seems a pretty successful pattern.
 
 ## Made for power users
-All of the points discussed so far are in service of this one: **WordPress accels for power users who cannot code**. I knew several WordPress 'Developers' who didn't know a lick of PHP and still made their professional career on the back of creating WordPress websites. These are the users to optimize for.
+All of the points discussed so far are in service of this one: **WordPress accels for power users who cannot code**. Plenty of WordPress 'Developers' don't know a lick of PHP and have still made professional careers creating WordPress websites for clients. These are the users to optimize for.
 
 ## What not to do
 - Bet on HTML. Markdown is for nerds.
@@ -55,8 +55,8 @@ All of the points discussed so far are in service of this one: **WordPress accel
 - Eschew React. A CMS should be concerned with rendering HTML pages, and not get bogged down in complex re-rendering logic.
 
 ## Conclusion
-I honestly don't know how on point I am about all this...
+I honestly don't know how on point I am about all this. These were really just invasive thoughts I needed to put to page and out of my head. Pursant to that, I'd like to add a few closing remarks at peril of derailing discussion:
 
-These were really just invasive thoughts I needed to put to page and out of my head. I'm personally not a fan of PHP, and I consider "modern PHP" to have few redeeming qualities, having used it in anger. What I've said positive here is about all the positive things I have to say.
+- I'm personally not a fan of PHP, and I consider "modern PHP" to have few redeeming qualities, having used it in anger. What I've said positive here are about all the positive things I have to say.
 
-There's some contention between the concerns of building a website and a webapp, I suppose. Websites almost inevitably need some form of interactivity, but the majority of 'content' shouldn't get caught up in that.
+- There's some contention between the concerns of building a website and a webapp, I suppose. Websites almost inevitably need some form of interactivity, but the majority of 'content' shouldn't get caught up in that.
