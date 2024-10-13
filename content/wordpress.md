@@ -1,6 +1,6 @@
 %{
   title: "What about WordPress Works",
-  description: "I’d like to share what features and abstractions of WordPress gets fundamentally correct that I feel other CMS's should emulate.",
+  description: "I'd like to share what features and abstractions of WordPress gets fundamentally correct that I feel other CMS's should emulate.",
   image: "https://moosie.us/assets/wordpress/linotype.jpg"
 }
 ---
@@ -9,10 +9,10 @@
   <!-- source: https://www.loc.gov/item/2017788930/ -->
 </div>
 
-I’d like to share some features and abstractions I think WordPress gets fundamentally correct, that I feel other CMS's should emulate.
+I'd like to share some features and abstractions I think WordPress gets fundamentally correct that I feel other CMS's should emulate.
 
 For some context on my perspective:
-- I worked with WordPress on and off for about 4 years, but I didn’t start my career that way.
+- I worked with WordPress on and off for about 4 years, but I didn't start my career that way.
 - I have no skin in the CMS market.
 - I put maybe all of 15 minutes into gathering my thoughts here.
 
@@ -22,7 +22,7 @@ My first step in all but one WordPress project was to use the [classic editor](h
 I recall using the Gutenberg editor in earnest on exactly one WordPress project (maybe two), and it proved not worth the trouble.
 
 ## Pivotal Plugins
-WordPress leaves a lot wanting that’s made up for by a handful of pivotal plugins. It’s been a while since I’ve dealt with WordPress hands on (thank goodness), but the two that come to mind are **Advanced Custom Fields (ACF)** and **Yoast SEO**. Both of them provide functionality relevant to most websites:
+WordPress leaves a lot wanting that's made up for by a handful of pivotal plugins. It's been a while since I've dealt with WordPress hands on (thank goodness), but the two that come to mind are **Advanced Custom Fields (ACF)** and **Yoast SEO**. Both of them provide functionality relevant to most websites:
 
 - **ACF** allows users to define schemas for structured content in the database, and to incorporate them into templates.
 
@@ -31,7 +31,7 @@ WordPress leaves a lot wanting that’s made up for by a handful of pivotal plug
 Any successor CMS would do well to either have these features built in, or maintained as first party extensions. This is far from an exhaustive list though.
 
 ## Posts, Pages, and Taxonomy
-I would almost regard WordPress' heirarchy of posts, pages, post types, categories, tags, and custom post types as a solved problem. Emulating this structure may also drive conversion among existing users.
+I would almost regard WordPress' hierarchy of posts, pages, post types, categories, tags, and custom post types as a solved problem. Emulating this structure may also drive conversion among existing users.
 
 ## Interpreted templates and code
 **This is probably the most important bit:** I'm going to do my best here to explain why PHP has the right execution model for CMS's like WordPress - bear with me.
@@ -55,7 +55,7 @@ All of the points discussed so far are in service of this one: **WordPress excel
 - Eschew React. A CMS should be concerned with rendering HTML pages, and not get bogged down in complex re-rendering logic.
 
 ## Conclusion
-I honestly don't know how on point I am about all this. These were really just invasive thoughts I needed to put to page and out of my head. Pursant to that, I'd like to add a few closing remarks at peril of derailing discussion:
+I honestly don't know how on point I am about all this. These were really just invasive thoughts I needed to put to page and out of my head. Pursuant to that, I'd like to add a few closing remarks at peril of derailing discussion:
 
 - I'm personally not a fan of PHP, and I consider "modern PHP" to have few redeeming qualities, having used it in anger. What I've said positive here are about all the positive things I have to say.
 
