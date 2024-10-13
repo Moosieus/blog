@@ -1,6 +1,6 @@
 %{
   title: "What about WordPress Works",
-  description: "I'd like to share what features and abstractions of WordPress gets fundamentally correct that I feel other CMS's should emulate.",
+  description: "I'd like to share what features and abstractions of WordPress gets fundamentally correct that I feel other CMSs should emulate.",
   image: "https://moosie.us/assets/wordpress/linotype.jpg"
 }
 ---
@@ -9,7 +9,7 @@
   <!-- source: https://www.loc.gov/item/2017788930/ -->
 </div>
 
-I'd like to share some features and abstractions I think WordPress gets fundamentally correct that I feel other CMS's should emulate.
+I'd like to share some features and abstractions I think WordPress gets fundamentally correct that I feel other CMSs should emulate.
 
 For some context on my perspective:
 - I worked with WordPress on and off for about 4 years, but I didn't start my career that way.
@@ -34,7 +34,7 @@ Any successor CMS would do well to either have these features built in, or maint
 I would almost regard WordPress' hierarchy of posts, pages, post types, categories, tags, and custom post types as a solved problem. Emulating this structure may also drive conversion among existing users.
 
 ## Interpreted templates and code
-**This is probably the most important bit:** I'm going to do my best here to explain why PHP has the right execution model for CMS's like WordPress - bear with me.
+**This is probably the most important bit:** I'm going to do my best here to explain why PHP has the right execution model for CMSs like WordPress - bear with me.
 
 For starters, the full language is available from within server side rendered templates, akin to Embedded Ruby (.erb), JSX (.jsx), or Embedded Elixir (.eex). This is an important distinction compared to templating languages like Jinja or Go templates. Embedding full languages in templates mitigates context switching for developers and provides crucial flexibility. Server side rendering also dramatically simplifies things and is likewise vital.
 
@@ -47,8 +47,6 @@ All of the points discussed so far are in service of this one: **WordPress excel
 
 ## What not to do
 - Bet on HTML. Markdown is for nerds.
-
-- Don't imitate WordPress' security story.
 
 - A modern work-alike would do well to curtail users from needing too many plugins, and to manage plugin dependencies with semver.
 
