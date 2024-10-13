@@ -22,7 +22,7 @@ My first step in all but one WordPress project was to use the [classic editor](h
 I recall using the Gutenberg editor in earnest on exactly one WordPress project (maybe two), and it proved not worth the trouble.
 
 ## Pivotal Plugins
-WordPress leaves a lot wanting that's made up for by a handful of pivotal plugins. It's been a while since I've dealt with WordPress hands on (thank goodness), but the two that come to mind are **Advanced Custom Fields (ACF)** and **Yoast SEO**. Both of them provide functionality relevant to most websites:
+There's lots of functionality relevant to most websites that WordPress doesn't implement, but are instead addressed by popular community plugins. Without them, I'd argue that WordPress would feel incomplete for most users. The two I most immediately recall are **Advanced Custom Fields (ACF)** and **Yoast SEO**:
 
 - **ACF** allows users to define schemas for structured content in the database, and to incorporate them into templates.
 
@@ -57,6 +57,6 @@ All of the points discussed so far are in service of this one: **WordPress excel
 ## Conclusion
 I honestly don't know how on point I am about all this. These were really just invasive thoughts I needed to put to page and out of my head. Pursuant to that, I'd like to add a few closing remarks at peril of derailing discussion:
 
-- I'm personally not a fan of PHP, and I consider "modern PHP" to have few redeeming qualities, having used it in anger. What I've said positive here are about all the positive things I have to say.
+- I'm not fond of PHP having used it in-anger on several projects. I don't think "modern PHP" remediates enough problems with the language to make it desirable either.
 
 - There's some contention between the concerns of building a website and a webapp, I suppose. Websites almost inevitably need some form of interactivity, but the majority of 'content' shouldn't get caught up in that.
