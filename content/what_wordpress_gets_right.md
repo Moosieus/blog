@@ -1,6 +1,6 @@
 %{
-  title: "What about WordPress Works",
-  description: "I'd like to share what features and abstractions of WordPress gets fundamentally correct that I feel other CMSs should emulate.",
+  title: "What WordPress gets right",
+  description: "I'd like to share some features and abstractions I think WordPress gets fundamentally correct that I feel other CMSs should emulate.",
   image: "https://moosie.us/assets/wordpress/linotype.jpg"
 }
 ---
