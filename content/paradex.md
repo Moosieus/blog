@@ -1,7 +1,7 @@
 %{
   title: "Paradex: A full power search engine in Ecto with ParadeDB",
   description: "Just use Postgres Just use Postgres Just use Postgres",
-  image: "https://moosie.us/assets/paradex/mosquito_nf_mark_xiii.jpg.jpg"
+  image: "https://moosie.us/assets/paradex/mosquito_nf_mark_xiii.jpg"
 }
 ---
 <div style="display:flex;justify-content:center;">
