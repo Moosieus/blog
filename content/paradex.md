@@ -63,7 +63,6 @@ from(
     text: "I'm 10-5 at Medical Center Drive in Great Seneca. There is an accident. They haven't blocked any of the roads yet, but they might have to block it once the tow truck is here. I'll just stick around.",
     score: 9.265514373779297
   },
-  # times are far apart, so likely separate cases.
   %{
     id: 23104,
     time: ~N[2024-10-11 09:25:43],
