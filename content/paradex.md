@@ -25,7 +25,7 @@ ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://doc
 
 ## Introducing Paradex
 
-I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides Ecto fragments to for ParadeDB's search syntax. Altogether this makes for a really compelling search solution:
+I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides Ecto fragments for ParadeDB's search syntax. Altogether this makes for a really compelling search solution:
 
 * There's no need to synchronize or Extract Transform & Load (ETL) data from Postgres to external services like ElasticSearch or Apache Solr.
 * You can compose search queries like we would any other Ecto query, and leverage Ecto's query caching.
