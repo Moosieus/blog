@@ -26,9 +26,7 @@
   <figcaption  style="margin-bottom: 2rem;">source: <a href="https://news.ycombinator.com/item?id=41818495">HN</a></figcaption>
 </div>
 
-ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://docs.paradedb.com/changelog/0.11.0).
-
-Prior to this version, ParadeDB's search queries embedded in the `FROM` expression like so:
+ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://docs.paradedb.com/changelog/0.11.0). Prior to this version, ParadeDB's search queries embedded in the `FROM` expression like so:
 ```sql
 SELECT * FROM calls_search_idx.search(
   query => paradedb.boolean(
@@ -66,9 +64,11 @@ With this new API, ParadeDB's is much more involved with query planning and exec
 * Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy when applicable.
 * There's room for optimization on the scale of magnitudes. The new version's seen up to **300x faster queries** in certain cases.
 
-Overall this is an extremeley weclome change. While I'm a complete Elixir fanatic, I do hope other database access layers are able to support ParadeDB in the near future.
+Overall this is an extremeley weclome change, and I hope the reduced overhead encourages more database access layers to add support for ParadeDB.
 
 ## Introducing Paradex
+
+As mentioned above, the ParadeDB makes use of Postgres' existing clauses (`WHERE`, `LIMIT`, `ORDER BY`, etc) which Ecto already composes today. Therefore we just need to define the bits of the query syntax Ecto doesn't have already. (todo: explain fragments)
 
 I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides Ecto fragments for ParadeDB's search syntax. Altogether this makes for a really compelling search solution:
 
