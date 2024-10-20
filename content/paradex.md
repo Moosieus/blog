@@ -19,16 +19,61 @@
 
 **It's all Postgres extensions! MWAHAHAHAHA**
 
-### If you read my last blog post, I ought to explain what changed.
+### If you read my [last blog post](https://moosie.us/parade_db_ecto) on this subject, I ought to explain what's changed.
 
-ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://docs.paradedb.com/changelog/0.11.0) that's possible to support in Ecto with fragments. The change actually moves considerable complexity from database access layers (like Ecto) to ParadeDB's internals, while yielding improved query performance.
+<div style="text-align:center">
+  <img src="./assets/paradex/hn_screenshot.png" alt="Quite interesting, except the fork aspect.">
+  <figcaption  style="margin-bottom: 2rem;">source: <a href="https://news.ycombinator.com/item?id=41818495">HN</a></figcaption>
+</div>
+
+ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://docs.paradedb.com/changelog/0.11.0).
+
+Prior to this version, ParadeDB's search queries embedded in the `FROM` expression like so:
+```sql
+SELECT * FROM calls_search_idx.search(
+  query => paradedb.boolean(
+    must => ARRAY[
+      paradedb.parse(field => 'transcript', value => 'mechanical OR "broke down" OR "tow truck"'),
+      paradedb.range(field => 'call_length', range => int4range(5, NULL, '[)'))
+    ]
+  ),
+  order_by_field => 'start_time',
+  order_by_direction => 'desc',
+  limit_rows => 15
+);
+```
+
+This approach simplified ParadeDB's query planning. Its Duties began at `call_search_idx.search(` and ended with the closing `)`. The surrounding SQL query nominally wrapped the results returned from Tantivy. This approach was simple, but imposed several limitations:
+
+* This syntax effectively placed an onus on database access layers to construct a de facto `SEARCH` clause.
+  * This is why my prior work on ParadeDB had to start with a forking Ecto. I'm glad to announce this is no longer the case -- more on that momentarily.
+* The `.search` function had to reinvent bits of SQL that already existed like with the `order_by_field` and `limit_rows` properties.
+* While simple, the approach precluded lots of potential optimizations the database could perform.
+
+Here's the overhauled syntax for comparison:
+```sql
+SELECT * FROM calls
+WHERE
+  calls.transcript @@@ 'mechanical OR "broke down" OR "tow truck"' AND 
+  calls.id @@@ paradedb.range('call_length', int4range(5, NULL, '[)'))
+ORDER BY calls.start_time DESC
+LIMIT 15;
+```
+
+With this new API, ParadeDB's is much more involved with query planning and execution. The search expressions have all been moved to the `@@@` operator, and embed fluently within the `WHERE` clause.
+
+* Database access layers already universally support composing `WHERE` clauses, so the only overhead for them now is supporting ParadeDB's query functions and the `@@@` operator (more on this in regards to Ecto later).
+* Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy when applicable.
+* There's room for optimization on the scale of magnitudes. The new version's seen up to **300x faster queries** in certain cases.
+
+Overall this is an extremeley weclome change. While I'm a complete Elixir fanatic, I do hope other database access layers are able to support ParadeDB in the near future.
 
 ## Introducing Paradex
 
 I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides Ecto fragments for ParadeDB's search syntax. Altogether this makes for a really compelling search solution:
 
 * There's no need to synchronize or Extract Transform & Load (ETL) data from Postgres to external services like ElasticSearch or Apache Solr.
-* You can compose search queries like we would any other Ecto query, and leverage Ecto's query caching.
+* You can compose search queries like you would any other Ecto query, and leverage Ecto's query caching.
 * The results of your search queries map to the Ecto schemas and associations you've already defined in your project. There's no need to marshall or re-query things from json.
 * Changes to your search index can be handled in your existing migration workflow.
 
@@ -75,6 +120,12 @@ from(
 
 Hybrid search is also possible with pgvector, which I've included a guide for [here](https://hexdocs.pm/paradex/hybrid_search.html).
 
-## Conclusion
+Overall I'm quite happy with the results! ParadeDB's operationally much more simple than ElasticSearch, and when combined with Ecto, a much more cohesive solution at that.
 
-Overall I'm quite happy with the results! I think ParadeDB really offers an operationally simple alternative to ElasticSearch, and I'm impressed with what they've come to offer in just a year of operation. When combined with Ecto's capabilities, it makes for an especially cohesive search solution.
+## Looking Forward
+
+* I think the ParadeDB team is making the right choices in terms of technology, licensing (AGPL 3.0), and business growth.
+
+* Right now ParadeDB still falls short of ElasticSearch in a few ways, but given their progress up to this point, I forsee the gap quickly narrowing.
+
+* A few months ago, database luminaries Michael Stonebraker and Andrew Pavlo published one of the most [**out for blood**](https://db.cs.cmu.edu/papers/2024/whatgoesaround-sigmodrec2024.pdf) techincal papers I've ever read. It starts with a victory lap from Stonebraker having successfully forecasted the success of relational databases, and goes on to critique the current database landscape. (todo: maybe pick up here.)
