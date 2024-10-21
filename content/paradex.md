@@ -116,14 +116,14 @@ Overall I'm quite happy with the results! ParadeDB's operationally much more sim
 
 ## Looking Forward
 
-`0.11.0` has really opened up a grimoire of possibilities for ParadeDB, and I'm excited to see the project close the gaps in capabilities with ElasticSearch, especially with analytical queries.
+`0.11.0` has really opened up a grimoire of possibilities. I'm excited to see the gaps in capabilities close with ElasticSearch, especially with analytical queries.
 
 I hope ORMs and DBAL contributors in other languages will look into supporting ParadeDB, especially now that the amount of work necessary has been significantly reduced. Heck, my entire implementation's [a single file](https://github.com/Moosieus/paradex/tree/main/lib) of trivial macros.
 
 On a final note, I really think Postgres is the best database for most software service businesses operating today. Technical decision makers would do well to evaluate Postgres' capabilities before introducing multiple disparate storage technologies:
 
 * If you need a key-value store, look at [hstore](https://www.postgresql.org/docs/current/hstore.html). Ruby on Rails 8 [won't even ship with Redis](https://fly.io/ruby-dispatch/the-plan-for-rails-8/#less-moving-parts-in-production) b/c databases on NVME SSDs are fast enough.
-* If you need to store JSOn documents, check out Postgres [JSON Types](https://www.postgresql.org/docs/current/datatype-json.html) and the new `JSON_TABLE` feature in [Postgres 17](https://www.postgresql.org/about/news/postgresql-17-released-2936/).
+* If you need to store JSON documents, check out Postgres [JSON Types](https://www.postgresql.org/docs/current/datatype-json.html) and the new `JSON_TABLE` feature in [Postgres 17](https://www.postgresql.org/about/news/postgresql-17-released-2936/).
 * If you need a columnar database for lakehouse analytics, consider ParadeDB and [pg_analytics](https://github.com/paradedb/pg_analytics).
 * If you need a search engine, *see the above article!*
 * If you need a vector store and similarity search, [pgvector](https://github.com/pgvector/pgvector) has you covered.
