@@ -42,9 +42,9 @@ Search queries had a very visible start with `call_search_idx.search(` and endin
 
 * The search query added a de facto `SEARCH` clause to PSQL, similar-to-but-distinct-from `WHERE`. DBALs were effectively responsible for providing composition for that `SEARCH` clause in addition to `WHERE` -- In fact, *I had to fork Ecto to quite literally implement a `search:` clause.*
 * The `.search` function reimplemented bits of SQL with properties like `order_by_field` and `limit_rows`, which required special handling regardless of approach.
-* While simple, this approach also precluded lots of potential optimizations the database could perform.
+* While simple, this approach also precluded lots of optimization.
 
-`0.11.0` resolves a lot of these issues with the overhauled syntax. In fact, the `.search()` syntax has been entirely removed. Here's a workalike query for comparison:
+`0.11.0` replaces the `.search()` syntax entirely with an infix `@@@` operator. Here's a workalike query for comparison:
 ```sql
 SELECT * FROM calls
 WHERE
@@ -54,11 +54,11 @@ ORDER BY calls.start_time DESC
 LIMIT 15;
 ```
 
-With this new API, ParadeDB's is much more involved with query planning and execution. The search expressions have all been moved to the `@@@` operator and embed fluently in the `WHERE` clause.
+With this new API, ParadeDB's much more involved with query planning and execution, and DBALs have an easier go of things:
 
 * Database access layers already compose `WHERE` clauses *(I hope)*, so the only overhead now is including ParadeDB's query functions and the `@@@` operator. *That's it! :D*
 * Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy when applicable.
-* There's room for performance gains on orders of magnitudes. The new version's seen **up to 300x faster queries** in certain cases.
+* As an aside there's room for performance gains on orders of magnitudes.
 
 ## Introducing Paradex
 
