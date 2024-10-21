@@ -183,6 +183,18 @@ code.makeup {
   overflow-x: scroll;
 }
 
+code.sql {
+  color: #f8f8f2;
+  background-color: #272822;
+  display: block;
+  font-family: 'Jetbrains Mono';
+  font-size: 0.95em;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  overflow-x: scroll;
+}
+
 .text-muted {
   color: rgb(var(--text-muted));
 }
