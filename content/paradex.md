@@ -71,7 +71,7 @@ Altogether I think this makes for a really compelling search solution:
 * The results of your search queries map to the Ecto schemas and associations you've already defined in your project. There's no need to marshall or re-query things from json.
 * Changes to your search index can be handled in your existing migration workflow.
 
-Here's an example from Paradex's test suite, along with a snippet of the query results:
+Here's a workalike query from the example above:
 ```elixir
 import Ecto.Query
 import Paradex
@@ -86,7 +86,7 @@ page_size = 15
 query =
   from(
     c in Call,
-    select: %{score: score(c.id), id: c.id, text: c.transcript, time: c.start_time},
+    select: %{id: c.id, score: score(c.id), time: c.start_time, text: c.transcript},
     where: c.transcript ~> ^search,
     order_by: [desc: c.start_time],
     limit: ^page_size
@@ -107,15 +107,15 @@ Repo.all(query)
 [
   %{
     id: 23579,
+    score: 9.265514373779297,
     time: ~N[2024-10-11 10:42:48],
-    text: "I'm 10-5 at Medical Center Drive in Great Seneca. There is an accident. They haven't blocked any of the roads yet, but they might have to block it once the tow truck is here. I'll just stick around.",
-    score: 9.265514373779297
+    text: "I'm 10-5 at Medical Center Drive in Great Seneca. There is an accident. They haven't blocked any of the roads yet, but they might have to block it once the tow truck is here. I'll just stick around."
   },
   %{
     id: 23104,
+    score: 10.1517333984375,
     time: ~N[2024-10-11 09:25:43],
-    text: "Please, could you send the coordinator or someone? Are you broke down right before Watkins, ma'am?",
-    score: 10.1517333984375
+    text: "Please, could you send the coordinator or someone? Are you broke down right before Watkins, ma'am?"
   },
   #...
 ]
