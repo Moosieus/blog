@@ -1,9 +1,11 @@
 %{
-  title: "Paradex: A full power search engine in Ecto with ParadeDB",
-  description: "Just use Postgres Just use Postgres Just use Postgres",
+  title: "ParadeDB 0.11.0, database access layers, AND YOU!",
+  description: "Also announcing Paradex for Ecto",
   image: "https://moosie.us/assets/paradex/mosquito_nf_mark_xiii.jpg"
 }
 ---
+*Author's note: I originally published this on October 19th. I then grew dissatisfied and wrote a post v2. This is perhaps the reason I failed English courses and became a software engineer.*
+
 <div style="display:flex;justify-content:center;">
   <img src="./assets/paradex/mosquito_nf_mark_xiii.jpg" alt="Mosquito PR MK XVI" style="margin-bottom: 2rem;">
   <!-- source: https://www.iwm.org.uk/collections/item/object/205211733 -->
@@ -13,20 +15,17 @@
 
 [ParadeDB](https://www.paradedb.com/) is an alternative to ElasticSearch built on Postgres. More technically, it's a trio of extensions that fulfill the same purpose:
 
-* pg_search which embeds a BM25 full text search engine ([Tantivy](https://github.com/quickwit-oss/tantivy)), and extends SQL to allow for composing search queries.
-* pg_analytics which embeds [DuckDB](https://duckdb.org/), allowing Postgres to query datalakes on S3 in formats like Parquet.
-* [pgvector](https://github.com/pgvector/pgvector), a standalone extension which implements vector similarity search.
+* [pg_search](https://github.com/paradedb/paradedb/tree/dev/pg_search) which embeds a BM25 full text search engine ([Tantivy](https://github.com/quickwit-oss/tantivy)), and extends SQL to allow for composing search queries.
+* [pg_analytics](https://github.com/paradedb/pg_analytics) which embeds [DuckDB](https://duckdb.org/), allowing Postgres to query datalakes on S3 in formats like Parquet.
+* [pgvector](https://github.com/pgvector/pgvector), a standalone extension which implements vector data storage and similarity search.
 
 **It's all Postgres extensions! MWAHAHAHAHA**
 
-### If you read my [last blog post](https://moosie.us/parade_db_ecto) on this subject, I ought to explain what's changed.
+## Last week's update
 
-<div style="text-align:center">
-  <img src="./assets/paradex/hn_screenshot.png" alt="Quite interesting, except the fork aspect.">
-  <figcaption  style="margin-bottom: 2rem;">source: <a href="https://news.ycombinator.com/item?id=41818495">HN</a></figcaption>
-</div>
+ParadeDB `0.11.0` [dropped last week](https://docs.paradedb.com/changelog/0.11.0) with lots of improvements, including an overhauled API. The syntax is far more viable for database access layers (DBALs) to accommodate.
 
-ParadeDB `0.11.0` dropped earlier this week with an [overhauled API](https://docs.paradedb.com/changelog/0.11.0). Prior to this version, ParadeDB's search queries embedded in the `FROM` expression like so:
+In my [prior attempt](https://moosie.us/parade_db_ecto) to support ParadeDB in Elixir, I had to completely fork [Ecto](https://github.com/elixir-ecto/ecto) to support search query composition. This is because previous versions of ParadeDB embedded search queries entirely in the `FROM` expression like so:
 ```sql
 SELECT * FROM calls_search_idx.search(
   query => paradedb.boolean(
@@ -41,14 +40,13 @@ SELECT * FROM calls_search_idx.search(
 );
 ```
 
-This approach simplified ParadeDB's query planning. Its Duties began at `call_search_idx.search(` and ended with the closing `)`. The surrounding SQL query nominally wrapped the results returned from Tantivy. This approach was simple, but imposed several limitations:
+Search queries had a very visible start with `call_search_idx.search(` and ending at `)`. This simplified parsing and planning but posed several downsides:
 
-* This syntax effectively placed an onus on database access layers to construct a de facto `SEARCH` clause.
-  * This is why my prior work on ParadeDB had to start with a forking Ecto. I'm glad to announce this is no longer the case -- more on that momentarily.
-* The `.search` function had to reinvent bits of SQL that already existed like with the `order_by_field` and `limit_rows` properties.
-* While simple, the approach precluded lots of potential optimizations the database could perform.
+* The search query added a de facto `SEARCH` clause to PSQL, similar-to-but-distinct-from `WHERE`. DBALs were effectively responsible for providing composition for that `SEARCH` clause in addition to `WHERE` -- In fact, *I had to fork Ecto to quite literally implement a `search:` clause.*
+* The `.search` function reimplemented bits of SQL with properties like `order_by_field` and `limit_rows`, which required special handling regardless of approach.
+* While simple, this approach also precluded lots of optimization.
 
-Here's the overhauled syntax for comparison:
+`0.11.0` replaces the `.search()` syntax entirely with an infix `@@@` operator. Here's a workalike query for comparison:
 ```sql
 SELECT * FROM calls
 WHERE
@@ -58,26 +56,24 @@ ORDER BY calls.start_time DESC
 LIMIT 15;
 ```
 
-With this new API, ParadeDB's is much more involved with query planning and execution. The search expressions have all been moved to the `@@@` operator, and embed fluently within the `WHERE` clause.
+With this new API, ParadeDB's much more involved with query planning and execution, and DBALs have an easier go of things:
 
-* Database access layers already universally support composing `WHERE` clauses, so the only overhead for them now is supporting ParadeDB's query functions and the `@@@` operator (more on this in regards to Ecto later).
-* Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy when applicable.
-* There's room for optimization on the scale of magnitudes. The new version's seen up to **300x faster queries** in certain cases.
-
-Overall this is an extremeley weclome change, and I hope the reduced overhead encourages more database access layers to add support for ParadeDB.
+* Most DBALs already compose `WHERE` clauses, so the only overhead now is adding the query functions and `@@@` operator.
+* Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy as well.
+* As an aside there's room for performance gains on orders of magnitudes.
 
 ## Introducing Paradex
 
-As mentioned above, the ParadeDB makes use of Postgres' existing clauses (`WHERE`, `LIMIT`, `ORDER BY`, etc) which Ecto already composes today. Therefore we just need to define the bits of the query syntax Ecto doesn't have already. (todo: explain fragments)
+I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides [Ecto fragments](https://hexdocs.pm/ecto/Ecto.Query.html#module-fragments) for ParadeDB. The implementation's now [a single file of trivial macros](https://github.com/Moosieus/paradex/tree/main/lib), compared to the prior fork.
 
-I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides Ecto fragments for ParadeDB's search syntax. Altogether this makes for a really compelling search solution:
+Altogether I think this makes for a really compelling search solution:
 
 * There's no need to synchronize or Extract Transform & Load (ETL) data from Postgres to external services like ElasticSearch or Apache Solr.
 * You can compose search queries like you would any other Ecto query, and leverage Ecto's query caching.
 * The results of your search queries map to the Ecto schemas and associations you've already defined in your project. There's no need to marshall or re-query things from json.
 * Changes to your search index can be handled in your existing migration workflow.
 
-Here's an example from Paradex's test suite, along with a snippet of the query results:
+Here's a workalike query from the example above:
 ```elixir
 import Ecto.Query
 import Paradex
@@ -89,30 +85,39 @@ search = ~s'mechanical OR "broke down" OR "tow truck"'
 min_length = 5
 page_size = 15
 
-from(
-  c in Call,
-  select: %{score: score(c.id), id: c.id, text: c.transcript, time: c.start_time},
-  where: c.transcript ~> ^search,
-  where: c.id ~> int4range("call_length", ^min_length, nil, "[)"),
-  order_by: [desc: c.start_time],
-  limit: ^page_size
-)
-|> Repo.all()
+query =
+  from(
+    c in Call,
+    select: %{id: c.id, score: score(c.id), time: c.start_time, text: c.transcript},
+    where: c.transcript ~> ^search,
+    order_by: [desc: c.start_time],
+    limit: ^page_size
+  )
+
+# composition :D
+query =
+  if some_condition do
+    where(query, [c], c.id ~> int4range("call_length", ^min_length, nil, "[)"))
+  else
+    query
+  end
+
+Repo.all(query)
 ```
 
 ```elixir
 [
   %{
     id: 23579,
+    score: 9.265514373779297,
     time: ~N[2024-10-11 10:42:48],
-    text: "I'm 10-5 at Medical Center Drive in Great Seneca. There is an accident. They haven't blocked any of the roads yet, but they might have to block it once the tow truck is here. I'll just stick around.",
-    score: 9.265514373779297
+    text: "I'm 10-5 at Medical Center Drive in Great Seneca. There is an accident. They haven't blocked any of the roads yet, but they might have to block it once the tow truck is here. I'll just stick around."
   },
   %{
     id: 23104,
+    score: 10.1517333984375,
     time: ~N[2024-10-11 09:25:43],
-    text: "Please, could you send the coordinator or someone? Are you broke down right before Watkins, ma'am?",
-    score: 10.1517333984375
+    text: "Please, could you send the coordinator or someone? Are you broke down right before Watkins, ma'am?"
   },
   #...
 ]
@@ -124,8 +129,19 @@ Overall I'm quite happy with the results! ParadeDB's operationally much more sim
 
 ## Looking Forward
 
-* I think the ParadeDB team is making the right choices in terms of technology, licensing (AGPL 3.0), and business growth.
+`0.11.0` has really opened up a grimoire of possibilities. I'm excited to see the gaps in capabilities close with ElasticSearch, especially with analytical queries.
 
-* Right now ParadeDB still falls short of ElasticSearch in a few ways, but given their progress up to this point, I forsee the gap quickly narrowing.
+I hope ORMs and DBAL contributors in other languages will look into supporting ParadeDB, especially now that the amount of work necessary has been significantly reduced.
 
-* A few months ago, database luminaries Michael Stonebraker and Andrew Pavlo published one of the most [**out for blood**](https://db.cs.cmu.edu/papers/2024/whatgoesaround-sigmodrec2024.pdf) techincal papers I've ever read. It starts with a victory lap from Stonebraker having successfully forecasted the success of relational databases, and goes on to critique the current database landscape. (todo: maybe pick up here.)
+On a final note, I really think Postgres is the best database for most software service businesses operating today. Technical decision makers would do well to evaluate Postgres' capabilities before introducing multiple disparate storage technologies:
+
+* If you need a key-value store, look at [hstore](https://www.postgresql.org/docs/current/hstore.html). Ruby on Rails 8 [won't even ship with Redis](https://fly.io/ruby-dispatch/the-plan-for-rails-8/#less-moving-parts-in-production) b/c databases on NVME SSDs are fast enough.
+* If you need to store JSON documents, check out Postgres [JSON Types](https://www.postgresql.org/docs/current/datatype-json.html) and the new `JSON_TABLE` feature in [Postgres 17](https://www.postgresql.org/about/news/postgresql-17-released-2936/).
+* If you need a columnar database for lakehouse analytics, consider ParadeDB and [pg_analytics](https://github.com/paradedb/pg_analytics).
+* If you need a search engine, *see the above article!*
+* If you need a vector store and similarity search, [pgvector](https://github.com/pgvector/pgvector) has you covered.
+* For graph data, I don't have as great an answer until [Property Graph Queries](http://peter.eisentraut.org/blog/2023/04/04/sql-2023-is-finished-here-is-whats-new#property-graph-queries) drop in Postgres.
+
+## Further Reading
+
+A few months ago, database luminaries Michael Stonebraker and Andrew Pavlo published [What Goes Around Comes Around... And Around...](https://db.cs.cmu.edu/papers/2024/whatgoesaround-sigmodrec2024.pdf) They don't pull any punches, so if you're a fan of Hadoop or MongoDB, probably don't read this.
