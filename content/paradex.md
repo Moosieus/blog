@@ -56,8 +56,8 @@ LIMIT 15;
 
 With this new API, ParadeDB's much more involved with query planning and execution, and DBALs have an easier go of things:
 
-* Database access layers already compose `WHERE` clauses *(I hope)*, so the only overhead now is including ParadeDB's query functions and the `@@@` operator.
-* Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy when applicable.
+* Most DBALs already compose `WHERE` clauses, so the only overhead now is adding the query functions and `@@@` operator.
+* Clauses like `ORDER BY` and `LIMIT` are now transparently pushed down to Tantivy as well.
 * As an aside there's room for performance gains on orders of magnitudes.
 
 ## Introducing Paradex
