@@ -4,7 +4,7 @@
   image: "https://moosie.us/assets/paradex/mosquito_nf_mark_xiii.jpg"
 }
 ---
-*Author's note: I originally published this on October 19th. I then grew disatisfied and wrote a post v2. This is perhaps the reason I failed English courses and became a software engineer.*
+*Author's note: I originally published this on October 19th. I then grew dissatisfied and wrote a post v2. This is perhaps the reason I failed English courses and became a software engineer.*
 
 <div style="display:flex;justify-content:center;">
   <img src="./assets/paradex/mosquito_nf_mark_xiii.jpg" alt="Mosquito PR MK XVI" style="margin-bottom: 2rem;">
@@ -23,7 +23,7 @@
 
 ## Last week's update
 
-ParadeDB `0.11.0` [dropped last week](https://docs.paradedb.com/changelog/0.11.0) with lots of improvements, including an overhauled API. The syntax is far more viable for database access layers (DBALs) to accomodate.
+ParadeDB `0.11.0` [dropped last week](https://docs.paradedb.com/changelog/0.11.0) with lots of improvements, including an overhauled API. The syntax is far more viable for database access layers (DBALs) to accommodate.
 
 In my [prior attempt](https://moosie.us/parade_db_ecto) to support ParadeDB in Elixir, I had to completely fork [Ecto](https://github.com/elixir-ecto/ecto) to support search query composition. This is because previous versions of ParadeDB embedded search queries entirely in the `FROM` expression like so:
 ```sql
