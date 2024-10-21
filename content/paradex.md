@@ -19,9 +19,9 @@
 
 **It's all Postgres extensions! MWAHAHAHAHA**
 
-## Last week's big update
+## Last week's update
 
-ParadeDB `0.11.0` [dropped last week](https://docs.paradedb.com/changelog/0.11.0) with lots of major improvements, including an overhauled API! Certain queries run magnitudes faster, and the syntax is far more viable for database access layers (DBALs) to accomodate.
+ParadeDB `0.11.0` [dropped last week](https://docs.paradedb.com/changelog/0.11.0) with lots of improvements, including an overhauled API. The syntax is far more viable for database access layers (DBALs) to accomodate.
 
 In my [prior attempt](https://moosie.us/parade_db_ecto) to support ParadeDB in Elixir, I had to completely fork [Ecto](https://github.com/elixir-ecto/ecto) to support search query composition. This is because previous versions of ParadeDB embedded search queries entirely in the `FROM` expression like so:
 ```sql
