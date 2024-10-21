@@ -104,7 +104,7 @@ query =
 
 Repo.all(query)
 ```
-
+Here's the results!
 ```elixir
 [
   %{
