@@ -1,5 +1,5 @@
 %{
-  title: "ParadeDB's new update is great for database access layers",
+  title: "ParadeDB 0.11.0, database access layers, AND YOU!",
   description: "Also announcing Paradex for Ecto",
   image: "https://moosie.us/assets/paradex/mosquito_nf_mark_xiii.jpg"
 }
@@ -62,7 +62,9 @@ With this new API, ParadeDB's much more involved with query planning and executi
 
 ## Introducing Paradex
 
-I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides [Ecto fragments](https://hexdocs.pm/ecto/Ecto.Query.html#module-fragments) for ParadeDB's search syntax. Altogether I think this makes for a really compelling search solution:
+I've published a package called [Paradex](https://hexdocs.pm/paradex/readme.html) that provides [Ecto fragments](https://hexdocs.pm/ecto/Ecto.Query.html#module-fragments) for ParadeDB. The implementation's now [a single file of trivial macros](https://github.com/Moosieus/paradex/tree/main/lib), compared to the prior fork.
+
+Altogether I think this makes for a really compelling search solution:
 
 * There's no need to synchronize or Extract Transform & Load (ETL) data from Postgres to external services like ElasticSearch or Apache Solr.
 * You can compose search queries like you would any other Ecto query, and leverage Ecto's query caching.
@@ -81,15 +83,24 @@ search = ~s'mechanical OR "broke down" OR "tow truck"'
 min_length = 5
 page_size = 15
 
-from(
-  c in Call,
-  select: %{score: score(c.id), id: c.id, text: c.transcript, time: c.start_time},
-  where: c.transcript ~> ^search,
-  where: c.id ~> int4range("call_length", ^min_length, nil, "[)"),
-  order_by: [desc: c.start_time],
-  limit: ^page_size
-)
-|> Repo.all()
+query =
+  from(
+    c in Call,
+    select: %{score: score(c.id), id: c.id, text: c.transcript, time: c.start_time},
+    where: c.transcript ~> ^search,
+    order_by: [desc: c.start_time],
+    limit: ^page_size
+  )
+
+# composition :D
+query =
+  if some_condition do
+    where(query, [c], c.id ~> int4range("call_length", ^min_length, nil, "[)"))
+  else
+    query
+  end
+
+Repo.all(query)
 ```
 
 ```elixir
@@ -118,7 +129,7 @@ Overall I'm quite happy with the results! ParadeDB's operationally much more sim
 
 `0.11.0` has really opened up a grimoire of possibilities. I'm excited to see the gaps in capabilities close with ElasticSearch, especially with analytical queries.
 
-I hope ORMs and DBAL contributors in other languages will look into supporting ParadeDB, especially now that the amount of work necessary has been significantly reduced. Heck, my entire implementation's [a single file](https://github.com/Moosieus/paradex/tree/main/lib) of trivial macros.
+I hope ORMs and DBAL contributors in other languages will look into supporting ParadeDB, especially now that the amount of work necessary has been significantly reduced.
 
 On a final note, I really think Postgres is the best database for most software service businesses operating today. Technical decision makers would do well to evaluate Postgres' capabilities before introducing multiple disparate storage technologies:
 
